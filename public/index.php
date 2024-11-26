@@ -58,44 +58,32 @@ class Ifpi
     }
 }
 
+if (PHP_SAPI == 'cli') {
+    $artist = ($argc > 1) ? $argv[1] : '';
+    $song = ($argc > 2) ? $argv[2] : '';
+    $album = ($argc > 3) ? $argv[3] : '';
 
-$artist = ($argc > 1) ? $argv[1] : '';
-$song = ($argc > 2) ? $argv[2] : '';
-$album = ($argc > 3) ? $argv[3] : '';
+    $ifpi = new Ifpi($artist, $song, $album);
 
-$ifpi = new Ifpi($artist, $song, $album);
+    $dom = $ifpi->fetch(1);
+    $xpath = new DOMXPath($dom);
+    $elements = $xpath->query("//*[@id]");
+    $i = 0;
+    foreach ($elements as $elem) {
+        if (!preg_match('/^c[0-9]+/', $elem->id)) {
+            continue;
+        }
 
-$dom = $ifpi->fetch(1);
-$xpath = new DOMXPath($dom);
-$elements = $xpath->query("//*[@id]");
-$i = 0;
-foreach ($elements as $elem) {
-    if (!preg_match('/^c[0-9]+/', $elem->id)) {
-        continue;
+        $i++;
+        $lines = array_filter(array_map(function ($s) {
+            return trim($s);
+        }, explode("\n", $elem->textContent)));
+
+        $_artist = trim($lines[1]);
+        $_song = trim($lines[2]);
+        $_album = trim($lines[4]);
+
+        $allowed = $ifpi->allowed($xpath, $i);
+        printf("%d)\t[%s] %s\t%s\t%s\n", $i, $allowed ? 'T' : 'F', $_artist, $_song, $_album);
     }
-
-    $i++;
-    $lines = array_filter(array_map(function ($s) {
-        return trim($s);
-    }, explode("\n", $elem->textContent)));
-
-    // die(var_dump($lines));
-    // if (empty($lines)) {
-    //     continue;
-    // }
-    $artist = trim($lines[1]);
-    $song = trim($lines[2]);
-    $album = trim($lines[4]);
-
-    // todo: determine if allowed
-    $allowed = $ifpi->allowed($xpath, $i);
-    printf("%d)\t[%s] %s\t%s\t%s\n", $i, $allowed ? 'T' : 'F', $artist, $song, $album);
-
-    // $text = implode("\n", $lines);
-    // var_dump($i, $text);
-
-    // $nodes = $elem->childNodes;
-    // die($elem);
 }
-
-// die($dom->saveHTML());
