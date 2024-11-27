@@ -47,58 +47,63 @@ $artist = (string) @$_GET['artist'];
 $song = (string) @$_GET['song'];
 $album = (string) @$_GET['album'];
 
-$ifpi = new Ifpi($artist, $song, $album);
-
-$dom = $ifpi->fetch(1);
-$xpath = new DOMXPath($dom);
-
 ?>
 <html>
 
-    <head>
+<head>
 
-    </head>
+</head>
 
-    <body>
-        <form>
-            <label for="artist">Artist</label>
-            <input name="artist" value="<?= @htmlentities($artist) ?>" />
-            <label for="song">Song</label>
-            <input name="song" value="<?= @htmlentities($song) ?>" />
-            <label for="album">Album</label>
-            <input name="album" value="<?= @htmlentities($album) ?>" />
+<body>
+    <form>
+        <label for="artist">Artist</label>
+        <input name="artist" value="<?= @htmlentities($artist) ?>" />
+        <label for="song">Song</label>
+        <input name="song" value="<?= @htmlentities($song) ?>" />
+        <label for="album">Album</label>
+        <input name="album" value="<?= @htmlentities($album) ?>" />
 
-            <input type="submit" />
-        </form>
+        <input type="submit" />
+    </form>
+    <?php
+    if (!empty($artist . $song . $album)) {
+        $ifpi = new Ifpi($artist, $song, $album);
+
+        $dom = $ifpi->fetch(1);
+        $xpath = new DOMXPath($dom);
+        ?>
         <table>
             <tr>
                 <th>Artist</th>
                 <th>Song</th>
                 <th>Album</th>
             </tr>
-<?php
+            <?php
 
-$i = 0;
-foreach ($xpath->query("//*[@id]") as $elem) {
-    if (!preg_match('/^c[0-9]+/', $elem->id)) {
-        continue;
-    }
+            $i = 0;
+            foreach ($xpath->query("//*[@id]") as $elem) {
+                if (!preg_match('/^c[0-9]+/', $elem->id)) {
+                    continue;
+                }
 
-    $i++;
-    $lines = array_filter(array_map(function ($s) {
-        return trim($s);
-    }, explode("\n", $elem->textContent)));
+                $i++;
+                $lines = array_filter(array_map(function ($s) {
+                    return trim($s);
+                }, explode("\n", $elem->textContent)));
 
-    echo new Item(
-        $ifpi->allowed($xpath, $i),
-        trim($lines[1]),
-        trim($lines[2]),
-        trim($lines[4]),
-    );
-}
-?>
+                echo new Item(
+                    $ifpi->allowed($xpath, $i),
+                    trim($lines[1]),
+                    trim($lines[2]),
+                    trim($lines[4]),
+                );
+            }
+            ?>
 
         </table>
-    </body>
+        <?php
+    }
+    ?>
+</body>
 
 </html>
