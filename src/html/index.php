@@ -43,9 +43,9 @@ class Item
     }
 }
 
-$artist = @$_GET['artist'];
-$song = @$_GET['song'];
-$album = @$_GET['album'];
+$artist = (string) @$_GET['artist'];
+$song = (string) @$_GET['song'];
+$album = (string) @$_GET['album'];
 
 $ifpi = new Ifpi($artist, $song, $album);
 
@@ -62,11 +62,11 @@ $xpath = new DOMXPath($dom);
     <body>
         <form>
             <label for="artist">Artist</label>
-            <input name="artist" value="<?= htmlentities($artist) ?>" />
+            <input name="artist" value="<?= @htmlentities($artist) ?>" />
             <label for="song">Song</label>
-            <input name="song" value="<?= htmlentities($song) ?>" />
+            <input name="song" value="<?= @htmlentities($song) ?>" />
             <label for="album">Album</label>
-            <input name="album" value="<?= htmlentities($album) ?>" />
+            <input name="album" value="<?= @htmlentities($album) ?>" />
 
             <input type="submit" />
         </form>
