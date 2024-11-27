@@ -10,7 +10,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Daniel\\Ifpi\\": "src/lib"
+            "Daniel\\Ifpi\\": "lib"
         }
     },
     "authors": [

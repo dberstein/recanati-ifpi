@@ -31,7 +31,7 @@ class Ifpi
 
     public function fetch($page = null)
     {
-        printf("[%s]\n", $this->url($page));
+        printf("[<a href='%s'>link</a>]\n", $this->url($page));
 
         $html = file_get_contents($this->url($page));
         $dom = new DOMDocument('1.0');
