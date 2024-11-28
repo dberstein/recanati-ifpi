@@ -112,12 +112,12 @@ $album = (string) @$_GET['album'];
 <?php
             $ifpi = new Ifpi($artist, $song, $album);
             $page = 0;
+            $i = 0;
             while (true) {
                 $page++;
 
                 $dom = $ifpi->fetch($page);
                 $xpath = new DOMXPath($dom);
-                $i = 0;
                 foreach ($xpath->query("//*[@id]") as $elem) {
                     if (!preg_match('/^c[0-9]+/', $elem->id)) {
                         continue;
@@ -136,7 +136,7 @@ $album = (string) @$_GET['album'];
                     );
                 }
 
-                if ($page > 4) {
+                if ($page >= 4) {
                 // if (0 == count($xpath->query('/html/body/div[2]/div/div/div[4]/div[58]/div[2]/img'))) {
                     break;
                 }
