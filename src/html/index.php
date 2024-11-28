@@ -136,7 +136,8 @@ $album = (string) @$_GET['album'];
                     );
                 }
 
-                if (0 == count($xpath->query('/html/body/div[2]/div/div/div[4]/div[58]/div[2]/img'))) {
+                if ($page > 4) {
+                // if (0 == count($xpath->query('/html/body/div[2]/div/div/div[4]/div[58]/div[2]/img'))) {
                     break;
                 }
             }
