@@ -5,45 +5,8 @@ declare(strict_types=1);
 require __DIR__ . '/../vendor/autoload.php';
 
 use Daniel\Ifpi\Ifpi;
+use Daniel\Ifpi\Item;
 
-class Item
-{
-    protected $allowed;
-    protected $artist;
-    protected $song;
-    protected $album;
-
-    public function __construct($allowed, $artist, $song, $album)
-    {
-        $this->allowed = $allowed;
-        $this->artist = $artist;
-        $this->song = $song;
-        $this->album = $album;
-    }
-
-    public function __tostring()
-    {
-        if (PHP_SAPI == 'cli') {
-            return sprintf(
-                "[%s] %s\t%s\t%s\n",
-                $this->allowed ? 'T' : 'F',
-                $this->artist,
-                $this->song,
-                $this->album
-            );
-        } else {
-            $green = '#9de59d';
-            $red = '#d77d7d';
-            return sprintf(
-                "<tr style='%s'><td>%s</td><td>%s</td><td>%s</td></tr>\n",
-                'background-color: ' . ($this->allowed ? $green : $red),
-                htmlentities($this->artist),
-                htmlentities($this->song),
-                htmlentities($this->album),
-            );
-        }
-    }
-}
 
 $artist = (string) @$_GET['artist'];
 $song = (string) @$_GET['song'];
@@ -57,8 +20,8 @@ $album = (string) @$_GET['album'];
         table.results {
             border-collapse: collapse;
             border: 1px solid black;
-            width: 80%;
-            margin-left: 10%;
+            width: 90%;
+            margin-left: 5%;
         }
         td {
             border: 1px solid black;
@@ -105,9 +68,9 @@ $album = (string) @$_GET['album'];
 ?>
         <table class="results">
             <tr>
-                <th>Artist</th>
-                <th>Song</th>
-                <th>Album</th>
+                <th style="width 33%">Artist</th>
+                <th style="width 33%">Song</th>
+                <th style="width 33%">Album</th>
             </tr>
 <?php
             $ifpi = new Ifpi($artist, $song, $album);
