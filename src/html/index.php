@@ -26,6 +26,10 @@ $album = (string) @$_GET['album'];
         td {
             border: 1px solid black;
         }
+        form {
+            width: 90%;
+            margin-left: 5%;
+        }
     </style>
 </head>
 
