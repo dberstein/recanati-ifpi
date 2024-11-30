@@ -40,6 +40,7 @@ class Downloader
             curl_setopt($this->handles[$key], CURLOPT_FILE, $this->filePointers[$key]);
             curl_setopt($this->handles[$key], CURLOPT_HEADER, 0);
             curl_setopt($this->handles[$key], CURLOPT_CONNECTTIMEOUT, 45);
+            curl_setopt($this->handles[$key], CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
             curl_multi_add_handle($this->handle, $this->handles[$key]);
         }
     }
