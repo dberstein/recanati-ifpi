@@ -6,6 +6,7 @@ require __DIR__ . '/../vendor/autoload.php';
 
 use Daniel\Ifpi\Ifpi;
 use Daniel\Ifpi\Item;
+use Daniel\Ifpi\Downloader;
 
 
 $artist = (string) @$_GET['artist'];
@@ -78,19 +79,21 @@ $album = (string) @$_GET['album'];
             </tr>
 <?php
             $ifpi = new Ifpi($artist, $song, $album);
-            $page = 0;
-            $i = 0;
-            while (true) {
-                $page++;
 
-                $dom = $ifpi->fetch($page);
+            $downloader = new Downloader($ifpi->url(1), $ifpi->url(2), $ifpi->url(3), $ifpi->url(4));
+            $downloader->do();
+            foreach ($downloader->contents() as $file => $html) {
+                $dom = new DOMDocument('1.0');
+                @$dom->loadHTML($html);
                 $xpath = new DOMXPath($dom);
+
+                $i = 0;
                 foreach ($xpath->query("//*[@id]") as $elem) {
                     if (!preg_match('/^c[0-9]+/', $elem->id)) {
                         continue;
                     }
-
                     $i++;
+
                     $lines = array_filter(array_map(function ($s) {
                         return trim($s);
                     }, explode("\n", $elem->textContent)));
@@ -102,13 +105,7 @@ $album = (string) @$_GET['album'];
                         trim($lines[4]),
                     );
                 }
-
-                if ($page >= 4) {
-                // if (0 == count($xpath->query('/html/body/div[2]/div/div/div[4]/div[58]/div[2]/img'))) {
-                    break;
-                }
             }
-
 ?>
 
         </table>
