@@ -36,6 +36,9 @@ $album = (string) @$_GET['album'];
         .r {
             background-color: #d77d7d;
         }
+        .source {
+            text-align: center;
+        }
     </style>
 </head>
 
@@ -89,6 +92,7 @@ $album = (string) @$_GET['album'];
             while (true) {
                 $page++;
 
+                $n = 0;
                 $dom = $ifpi->fetch($page);
                 $xpath = new DOMXPath($dom);
                 foreach ($xpath->query("//*[@id]") as $elem) {
@@ -96,6 +100,7 @@ $album = (string) @$_GET['album'];
                         continue;
                     }
 
+                    $n++;
                     $i++;
                     $lines = array_filter(array_map(function ($s) {
                         return trim($s);
@@ -106,6 +111,13 @@ $album = (string) @$_GET['album'];
                         trim($lines[1]),
                         trim($lines[2]),
                         trim($lines[4]),
+                    );
+                }
+
+                if ($n > 0) {
+                    printf(
+                        "<tr><td colspan=3 class='source'><a href='%s'>↑ source ↑</a></td></tr>",
+                        $ifpi->url($page),
                     );
                 }
 
