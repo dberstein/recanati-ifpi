@@ -76,8 +76,8 @@ class Downloader
         $contents = [];
         foreach ($this->urls as $key => $url) {
             $file = $this->filename($url);
-            $contents[$file] = file_get_contents($file);
-            unlink($file);
+            $contents[$file] = file_exists($file) ? file_get_contents($file) : '<html></html>';
+            @unlink($file);
         }
 
         return $contents;

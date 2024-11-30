@@ -77,63 +77,59 @@ $album = (string) @$_GET['album'];
         </fieldset>
     </form>
 
+    <table class="results">
+        <tr>
+            <th style="width 33%">Artist</th>
+            <th style="width 33%">Song</th>
+            <th style="width 33%">Album</th>
+        </tr>
 <?php
-    if (!empty($artist . $song . $album)) {
-?>
-        <table class="results">
-            <tr>
-                <th style="width 33%">Artist</th>
-                <th style="width 33%">Song</th>
-                <th style="width 33%">Album</th>
-            </tr>
-<?php
-            $ifpi = new Ifpi($artist, $song, $album);
 
-            $downloader = new Downloader($ifpi->url(1), $ifpi->url(2), $ifpi->url(3), $ifpi->url(4));
-            $downloader->do();
+$ifpi = new Ifpi($artist, $song, $album);
 
-            $i = 0;
-            $page = 0;
-            foreach ($downloader->contents() as $file => $html) {
-                $dom = new DOMDocument('1.0');
-                @$dom->loadHTML($html);
-                $xpath = new DOMXPath($dom);
+$downloader = new Downloader($ifpi->url(1), $ifpi->url(2), $ifpi->url(3), $ifpi->url(4));
+if (!empty($artist . $song . $album)) {
+    $downloader->do();
+}
 
-                $n = 0;
-                $page++;
-                foreach ($xpath->query("//*[@id]") as $elem) {
-                    if (!preg_match('/^c[0-9]+/', $elem->id)) {
-                        continue;
-                    }
+$i = 0;
+$page = 0;
+foreach ($downloader->contents() as $file => $html) {
+    $dom = new DOMDocument('1.0');
+    @$dom->loadHTML($html);
+    $xpath = new DOMXPath($dom);
 
-                    $i++;
-                    $n++;
+    $n = 0;
+    $page++;
+    foreach ($xpath->query("//*[@id]") as $elem) {
+        if (!preg_match('/^c[0-9]+/', $elem->id)) {
+            continue;
+        }
 
-                    $lines = array_filter(array_map(function ($s) {
-                        return trim($s);
-                    }, explode("\n", $elem->textContent)));
+        $i++;
+        $n++;
 
-                    echo new Item(
-                        $ifpi->allowed($xpath, $i),
-                        trim($lines[1]),
-                        trim($lines[2]),
-                        trim($lines[4]),
-                    );
-                }
+        $lines = array_filter(array_map(function ($s) {
+            return trim($s);
+        }, explode("\n", $elem->textContent)));
 
-                if ($n > 0) {
-                    printf(
-                        "<tr><td colspan=3 class='source'><a href='%s'>↑ source ↑</a></td></tr>",
-                        $ifpi->url($page),
-                    );
-                }
-            }
-?>
-
-        </table>
-<?php
+        echo new Item(
+            $ifpi->allowed($xpath, $i),
+            trim($lines[1]),
+            trim($lines[2]),
+            trim($lines[4]),
+        );
     }
+
+    if ($n > 0) {
+        printf(
+            "<tr><td colspan=3 class='source'><a href='%s'>↑ source ↑</a></td></tr>\n",
+            $ifpi->url($page),
+        );
+    }
+}
 ?>
+    </table>
     </body>
 
 </html>
