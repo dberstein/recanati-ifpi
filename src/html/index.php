@@ -30,6 +30,12 @@ $album = (string) @$_GET['album'];
             width: 90%;
             margin-left: 5%;
         }
+        .g {
+            background-color: #9de59d;
+        }
+        .r {
+            background-color: #d77d7d;
+        }
     </style>
 </head>
 

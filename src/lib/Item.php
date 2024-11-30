@@ -31,8 +31,8 @@ class Item
             $green = '#9de59d';
             $red = '#d77d7d';
             return sprintf(
-                "<tr style='%s'><td>%s</td><td>%s</td><td>%s</td></tr>\n",
-                'background-color: ' . ($this->allowed ? $green : $red),
+                "<tr class='%s'><td>%s</td><td>%s</td><td>%s</td></tr>\n",
+                ($this->allowed ? 'g' : 'r'),
                 htmlentities($this->artist),
                 htmlentities($this->song),
                 htmlentities($this->album),
