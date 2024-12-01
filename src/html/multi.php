@@ -2,7 +2,8 @@
     <body>
 <?php
 
-if (false !== ($fh = fopen($_FILES['fileToUpload']['tmp_name'], 'r'))) {
+$file = $_FILES['fileToUpload']['tmp_name'];
+if (!empty($file) && false !== ($fh = fopen($file, 'r'))) {
     while (($data = fgetcsv($fh, 1000, ",")) !== false) {
         $artist = $data[1];
         $song = $data[2];
