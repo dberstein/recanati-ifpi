@@ -79,6 +79,7 @@ $album = (string) @$_GET['album'];
 
     <table class="results">
         <tr>
+            <th>#</th>
             <th style="width 33%">Artist</th>
             <th style="width 33%">Song</th>
             <th style="width 33%">Album</th>

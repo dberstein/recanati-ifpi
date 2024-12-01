@@ -19,6 +19,8 @@ class Item
 
     public function __tostring()
     {
+        static $idx = 0;
+
         if (PHP_SAPI == 'cli') {
             return sprintf(
                 "[%s] %s\t%s\t%s\n",
@@ -31,8 +33,9 @@ class Item
             $green = '#9de59d';
             $red = '#d77d7d';
             return sprintf(
-                "<tr class='%s'><td>%s</td><td>%s</td><td>%s</td></tr>\n",
+                "<tr class='%s'><td style='text-align: center'><b>%d</b></td><td>%s</td><td>%s</td><td>%s</td></tr>\n",
                 ($this->allowed ? 'g' : 'r'),
+                ++$idx,
                 htmlentities($this->artist),
                 htmlentities($this->song),
                 htmlentities($this->album),
