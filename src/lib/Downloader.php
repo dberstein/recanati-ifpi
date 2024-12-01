@@ -5,7 +5,7 @@ namespace Daniel\Ifpi;
 class Downloader
 {
     protected array $urls;
-    protected $handle;
+    protected $multi_handle;
     protected array $handles;
     protected array $filePointers;
     protected int $rand;
@@ -30,7 +30,7 @@ class Downloader
 
     public function prepare()
     {
-        $this->handle = curl_multi_init();
+        $this->multi_handle = curl_multi_init();
         $this->handles = [];
         $this->filePointers = [];
 
@@ -43,7 +43,7 @@ class Downloader
             curl_setopt($this->handles[$key], CURLOPT_HEADER, 0);
             curl_setopt($this->handles[$key], CURLOPT_CONNECTTIMEOUT, 45);
             curl_setopt($this->handles[$key], CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
-            curl_multi_add_handle($this->handle, $this->handles[$key]);
+            curl_multi_add_handle($this->multi_handle, $this->handles[$key]);
         }
     }
 
@@ -53,7 +53,7 @@ class Downloader
 
         // Download the files...
         do {
-            curl_multi_exec($this->handle, $running);
+            curl_multi_exec($this->multi_handle, $running);
         } while ($running > 0);
 
         $this->cleanup();
@@ -62,11 +62,11 @@ class Downloader
     public function cleanup()
     {
         foreach ($this->urls as $key => $url) {
-            curl_multi_remove_handle($this->handle, $this->handles[$key]);
+            curl_multi_remove_handle($this->multi_handle, $this->handles[$key]);
             curl_close($this->handles[$key]);
             fclose($this->filePointers[$key]);
         }
-        curl_multi_close($this->handle);
+        curl_multi_close($this->multi_handle);
     }
 
     public function contents()
