@@ -28,7 +28,7 @@ class Downloader
         return sprintf("/tmp/%s-%d-ifpi.html", md5($url), $this->rand);
     }
 
-    public function prepare(bool $overwrite = false)
+    public function prepare()
     {
         $this->handle = curl_multi_init();
         $this->handles = [];
@@ -47,9 +47,9 @@ class Downloader
         }
     }
 
-    public function do($overwrite = false)
+    public function do()
     {
-        $this->prepare($overwrite);
+        $this->prepare();
 
         // Download the files...
         do {
@@ -67,10 +67,6 @@ class Downloader
             fclose($this->filePointers[$key]);
         }
         curl_multi_close($this->handle);
-
-        foreach ($this->filePointers as $fh) {
-            // fclose($fh);
-        }
     }
 
     public function contents()
