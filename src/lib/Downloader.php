@@ -8,12 +8,14 @@ class Downloader
     protected $handle;
     protected array $handles;
     protected array $filePointers;
+    protected int $rand;
 
     public function __construct(string ...$url)
     {
         $this->urls = $url;
         $this->handles = [];
         $this->filePointers = [];
+        $this->rand = mt_rand(1000, 9999);
     }
 
     public function add(string $url)
@@ -23,7 +25,7 @@ class Downloader
 
     public function filename(string $url)
     {
-        return sprintf("/tmp/%s-ifpi.html", md5($url));
+        return sprintf("/tmp/%s-%d-ifpi.html", md5($url), $this->rand);
     }
 
     public function prepare(bool $overwrite = false)
