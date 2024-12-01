@@ -25,7 +25,11 @@ class Downloader
 
     public function filename(string $url)
     {
-        return sprintf("/tmp/%s-%d-ifpi.html", md5($url), $this->rand);
+        $page=null;
+        if (preg_match('/&page=(\d+)/', $url, $matches)) {
+            $page = $matches[1];
+        }
+        return sprintf("/tmp/%s-%d-ifpi.%d.html", md5($url), $this->rand, $page);
     }
 
     public function prepare()

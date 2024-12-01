@@ -100,8 +100,11 @@ foreach ($downloader->contents() as $file => $html) {
     @$dom->loadHTML($html);
     $xpath = new DOMXPath($dom);
 
+    preg_match('/.*-ifpi\.(\d+)\.html/', $file, $matches);
+    $page = $matches[1];
+
     $n = 0;
-    $page++;
+
     foreach ($xpath->query("//*[@id]") as $elem) {
         if (!preg_match('/^c[0-9]+/', $elem->id)) {
             continue;
@@ -124,7 +127,7 @@ foreach ($downloader->contents() as $file => $html) {
 
     if ($n > 0) {
         printf(
-            "<tr><td colspan=3 class='source'><a href='%s'>↑ source ↑</a></td></tr>\n",
+            "<tr><td colspan=4 class='source'><a href='%s'>↑ source ↑</a></td></tr>\n",
             $ifpi->url($page),
         );
     }
