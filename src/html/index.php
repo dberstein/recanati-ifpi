@@ -8,10 +8,9 @@ use Daniel\Ifpi\Ifpi;
 use Daniel\Ifpi\Item;
 use Daniel\Ifpi\Downloader;
 
-
-$artist = (string) @$_GET['artist'];
-$song = (string) @$_GET['song'];
-$album = (string) @$_GET['album'];
+$artist = (string) @$_REQUEST['artist'];
+$song = (string) @$_REQUEST['song'];
+$album = (string) @$_REQUEST['album'];
 
 ?>
 <html>
@@ -76,7 +75,18 @@ $album = (string) @$_GET['album'];
             <input type="submit" />
         </fieldset>
     </form>
+    <form action="multi.php" method="POST" enctype="multipart/form-data">
+        <fieldset>
+            <legend>Upload CSV</legend>
+            <div>
+                <input type="file" name="fileToUpload" id="fileToUpload" accept=".csv" />
+                <input type="hidden" name="MAX_FILE_SIZE" value="524288" />
+            </div>
+            <input type="submit" value="Upload" />
+        </fieldset>
+    </form>
 
+    <a name="results" />
     <table class="results">
         <tr>
             <th>#</th>
