@@ -8,7 +8,7 @@ RUN apt update -y && apt upgrade -y \
 # Configure PHP
 RUN mv /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini \
  && sed -i'' 's/expose_php = On/expose_php = Off/g' /usr/local/etc/php/php.ini \
- && sed -i'' 's/max_execution_time = 30/max_execution_time = 45/g' /usr/local/etc/php/php.ini
+ && sed -i'' 's/max_execution_time = 30/max_execution_time = 180/g' /usr/local/etc/php/php.ini
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | \

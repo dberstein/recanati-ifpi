@@ -39,13 +39,12 @@ class Downloader
         $this->filePointers = [];
 
         foreach ($this->urls as $key => $url) {
-            $file = $this->filename($url);
-            $this->filePointers[$key] = fopen($file, "w+");
-
+            $this->filePointers[$key] = fopen($this->filename($url), "w+");
             $this->handles[$key] = curl_init($url);
             curl_setopt($this->handles[$key], CURLOPT_FILE, $this->filePointers[$key]);
             curl_setopt($this->handles[$key], CURLOPT_HEADER, 0);
-            curl_setopt($this->handles[$key], CURLOPT_CONNECTTIMEOUT, 45);
+            curl_setopt($this->handles[$key], CURLOPT_CONNECTTIMEOUT, value: 5);
+            curl_setopt($this->handles[$key], CURLOPT_TIMEOUT, 45);
             curl_setopt($this->handles[$key], CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
             curl_multi_add_handle($this->multi_handle, $this->handles[$key]);
         }

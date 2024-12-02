@@ -79,8 +79,8 @@ $album = (string) @$_REQUEST['album'];
         <fieldset>
             <legend>Upload CSV</legend>
             <div>
-                <input type="file" name="fileToUpload" id="fileToUpload" accept=".csv" />
                 <input type="hidden" name="MAX_FILE_SIZE" value="524288" />
+                <input type="file" name="fileToUpload" id="fileToUpload" accept=".csv" />
             </div>
             <input type="submit" value="Upload" />
         </fieldset>
@@ -98,7 +98,14 @@ $album = (string) @$_REQUEST['album'];
 
 $ifpi = new Ifpi($artist, $song, $album);
 
-$downloader = new Downloader($ifpi->url(1), $ifpi->url(2), $ifpi->url(3), $ifpi->url(4));
+$urls = [
+    $ifpi->url(1),
+    $ifpi->url(2),
+    $ifpi->url(3),
+    $ifpi->url(4),
+];
+
+$downloader = new Downloader(...$urls);
 if (!empty($artist . $song . $album)) {
     $downloader->do();
 }
