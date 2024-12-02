@@ -120,6 +120,9 @@ if (!empty($artist . $song . $album)) {
 $i = 0;
 $page = 0;
 foreach ($downloader->contents() as $file => $html) {
+    if (!trim($html)) {
+        continue;
+    }
     $dom = new DOMDocument('1.0');
     @$dom->loadHTML($html);
     $xpath = new DOMXPath($dom);
