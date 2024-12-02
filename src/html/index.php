@@ -23,25 +23,32 @@ $album = (string) @$_REQUEST['album'];
             width: 90%;
             margin-left: 5%;
         }
+
         table#results th {
             border: 1px solid black;
         }
+
         table#results td {
             border: 1px solid black;
         }
+
         form {
             width: 90%;
             margin-left: 5%;
         }
+
         legend {
             font-size: 20px;
         }
+
         .g {
             background-color: #9de59d;
         }
+
         .r {
             background-color: #d77d7d;
         }
+
         .source {
             text-align: center;
         }
@@ -49,6 +56,17 @@ $album = (string) @$_REQUEST['album'];
 </head>
 
 <body>
+    <form action="multi.php" method="POST" enctype="multipart/form-data">
+        <fieldset>
+            <legend>Upload CSV (artist,song,album)</legend>
+            <div>
+                <input type="hidden" name="MAX_FILE_SIZE" value="524288" />
+                <input type="file" name="fileToUpload" id="fileToUpload" accept=".csv" />
+            </div>
+            <input type="submit" value="Upload" />
+        </fieldset>
+    </form>
+    ... or ...
     <form>
         <fieldset>
             <legend>Search artist/song/album</legend>
@@ -58,7 +76,7 @@ $album = (string) @$_REQUEST['album'];
                         <label for="artist">Artist</label>
                     </td>
                     <td>
-                        <input name="artist" style="width: 500px;" value="<?= @htmlentities($artist) ?>" /><br/>
+                        <input name="artist" style="width: 500px;" value="<?= @htmlentities($artist) ?>" /><br />
                     </td>
                 </tr>
                 <tr>
@@ -66,7 +84,7 @@ $album = (string) @$_REQUEST['album'];
                         <label for="song">Song</label>
                     </td>
                     <td>
-                        <input name="song" style="width: 500px;" value="<?= @htmlentities($song) ?>" /><br/>
+                        <input name="song" style="width: 500px;" value="<?= @htmlentities($song) ?>" /><br />
                     </td>
                 </tr>
                 <tr>
@@ -74,22 +92,11 @@ $album = (string) @$_REQUEST['album'];
                         <label for="album">Album</label>
                     </td>
                     <td>
-                        <input name="album" style="width: 500px;" value="<?= @htmlentities($album) ?>" /><br/>
+                        <input name="album" style="width: 500px;" value="<?= @htmlentities($album) ?>" /><br />
                     </td>
                 </tr>
             </table>
             <input type="submit" />
-        </fieldset>
-    </form>
-    ... or ...
-    <form action="multi.php" method="POST" enctype="multipart/form-data">
-        <fieldset>
-            <legend>Upload CSV (artist,song,album)</legend>
-            <div>
-                <input type="hidden" name="MAX_FILE_SIZE" value="524288" />
-                <input type="file" name="fileToUpload" id="fileToUpload" accept=".csv" />
-            </div>
-            <input type="submit" value="Upload" />
         </fieldset>
     </form>
 
@@ -101,73 +108,73 @@ $album = (string) @$_REQUEST['album'];
             <th style="width 33%">Song</th>
             <th style="width 33%">Album</th>
         </tr>
-<?php
+        <?php
 
-$ifpi = new Ifpi($artist, $song, $album);
+        $ifpi = new Ifpi($artist, $song, $album);
 
-$urls = [
-    $ifpi->url(1),
-    $ifpi->url(2),
-    $ifpi->url(3),
-    $ifpi->url(4),
-];
+        $urls = [
+            $ifpi->url(1),
+            $ifpi->url(2),
+            $ifpi->url(3),
+            $ifpi->url(4),
+        ];
 
-$downloader = new Downloader(...$urls);
-if (!empty($artist . $song . $album)) {
-    $downloader->do();
-}
-
-$i = 0;
-$page = 0;
-foreach ($downloader->contents() as $file => $html) {
-    if (!trim($html)) {
-        continue;
-    }
-    $dom = new DOMDocument('1.0');
-    @$dom->loadHTML($html);
-    $xpath = new DOMXPath($dom);
-
-    preg_match('/.*-ifpi\.(\d+)\.html/', $file, $matches);
-    $page = $matches[1];
-
-    $n = 0;
-
-    foreach ($xpath->query("//*[@id]") as $elem) {
-        if (!preg_match('/^c[0-9]+/', $elem->id)) {
-            continue;
+        $downloader = new Downloader(...$urls);
+        if (!empty($artist . $song . $album)) {
+            $downloader->do();
         }
 
-        $i++;
-        $n++;
+        $i = 0;
+        $page = 0;
+        foreach ($downloader->contents() as $file => $html) {
+            if (!trim($html)) {
+                continue;
+            }
+            $dom = new DOMDocument('1.0');
+            @$dom->loadHTML($html);
+            $xpath = new DOMXPath($dom);
 
-        $lines = array_filter(array_map(function ($s) {
-            return trim($s);
-        }, explode("\n", $elem->textContent)));
+            preg_match('/.*-ifpi\.(\d+)\.html/', $file, $matches);
+            $page = $matches[1];
 
-        echo new Item(
-            $ifpi->allowed($xpath, $i),
-            trim($lines[1]),
-            trim($lines[2]),
-            trim($lines[4]),
-        );
-    }
+            $n = 0;
 
-    if ($n > 0) {
-        printf(
-            "<tr><td colspan=4 class='source'><a href='%s'>↑ source ↑</a></td></tr>\n",
-            $ifpi->url($page),
-        );
-    }
-}
+            foreach ($xpath->query("//*[@id]") as $elem) {
+                if (!preg_match('/^c[0-9]+/', $elem->id)) {
+                    continue;
+                }
 
-if (!empty($artist . $song . $album) && $i == 0) {
-    printf(
-        "<tr><td colspan=4 class='source'>%s</td></tr>\n",
-        "No results found",
-    );
-}
-?>
+                $i++;
+                $n++;
+
+                $lines = array_filter(array_map(function ($s) {
+                    return trim($s);
+                }, explode("\n", $elem->textContent)));
+
+                echo new Item(
+                    $ifpi->allowed($xpath, $i),
+                    trim($lines[1]),
+                    trim($lines[2]),
+                    trim($lines[4]),
+                );
+            }
+
+            if ($n > 0) {
+                printf(
+                    "<tr><td colspan=4 class='source'><a href='%s'>↑ source ↑</a></td></tr>\n",
+                    $ifpi->url($page),
+                );
+            }
+        }
+
+        if (!empty($artist . $song . $album) && $i == 0) {
+            printf(
+                "<tr><td colspan=4 class='source'>%s</td></tr>\n",
+                "No results found",
+            );
+        }
+        ?>
     </table>
-    </body>
+</body>
 
 </html>
