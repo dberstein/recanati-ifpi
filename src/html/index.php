@@ -23,12 +23,18 @@ $album = (string) @$_REQUEST['album'];
             width: 90%;
             margin-left: 5%;
         }
-        table#results > td {
+        table#results th {
+            border: 1px solid black;
+        }
+        table#results td {
             border: 1px solid black;
         }
         form {
             width: 90%;
             margin-left: 5%;
+        }
+        legend {
+            font-size: 20px;
         }
         .g {
             background-color: #9de59d;
@@ -75,9 +81,10 @@ $album = (string) @$_REQUEST['album'];
             <input type="submit" />
         </fieldset>
     </form>
+    ... or ...
     <form action="multi.php" method="POST" enctype="multipart/form-data">
         <fieldset>
-            <legend>Upload CSV</legend>
+            <legend>Upload CSV (artist,song,album)</legend>
             <div>
                 <input type="hidden" name="MAX_FILE_SIZE" value="524288" />
                 <input type="file" name="fileToUpload" id="fileToUpload" accept=".csv" />
@@ -87,7 +94,7 @@ $album = (string) @$_REQUEST['album'];
     </form>
 
     <a name="results" />
-    <table class="results">
+    <table id="results">
         <tr>
             <th>#</th>
             <th style="width 33%">Artist</th>
@@ -150,7 +157,7 @@ foreach ($downloader->contents() as $file => $html) {
     }
 }
 
-if ($i == 0) {
+if (!empty($artist . $song . $album) && $i == 0) {
     printf(
         "<tr><td colspan=4 class='source'>%s</td></tr>\n",
         "No results found",

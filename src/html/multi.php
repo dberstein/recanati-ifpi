@@ -9,17 +9,18 @@
             $url = sprintf(
                 '/?%s#results',
                 http_build_query([
-                    'artist' => $data[0],
-                    'song' => $data[1],
-                    'album' => '',
+                    'artist' => $data[0] ?? '',
+                    'song' => $data[1] ?? '',
+                    'album' => $data[2] ?? '',
                 ]),
             );
 
             printf(
-                "<b><a href='%s' target=_blank >%s - %s</a></b>\n",
+                "<b><a href='%s' target=_blank >%s - %s (%s)</a></b>\n",
                 $url,
-                htmlentities($data[0]),
-                htmlentities($data[1]),
+                htmlentities($data[0] ?? ''),
+                htmlentities($data[1] ?? ''),
+                htmlentities($data[2] ?? ''),
             );
 
             printf(
