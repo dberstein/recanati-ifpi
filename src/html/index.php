@@ -17,13 +17,13 @@ $album = (string) @$_REQUEST['album'];
 
 <head>
     <style>
-        table.results {
+        table#results {
             border-collapse: collapse;
             border: 1px solid black;
             width: 90%;
             margin-left: 5%;
         }
-        td {
+        table#results > td {
             border: 1px solid black;
         }
         form {
@@ -148,6 +148,13 @@ foreach ($downloader->contents() as $file => $html) {
             $ifpi->url($page),
         );
     }
+}
+
+if ($i == 0) {
+    printf(
+        "<tr><td colspan=4 class='source'>%s</td></tr>\n",
+        "No results found",
+    );
 }
 ?>
     </table>
