@@ -39,13 +39,15 @@ $album = (string) @$_REQUEST['album'];
             margin-left: 5%;
         }
 
-        /* form {
+        form {
             width: 100%;
         }
 
-        input:not(button) {
-            width: 100%;
-        } */
+        fieldset {
+            border: 1px solid black;
+            padding: 15px;
+            border-radius: 20px;
+        }
 
         legend {
             font-size: 20px;
@@ -88,7 +90,7 @@ $album = (string) @$_REQUEST['album'];
                         <label for="artist" class="form-label">Artist</label>
                     </td>
                     <td>
-                        <input name="artist" class="form-control" style="width: 500px;" value="<?= @htmlentities($artist) ?>" /><br />
+                        <input name="artist" class="form-control" style="width: 100%;" value="<?= @htmlentities($artist) ?>" /><br />
                     </td>
                 </tr>
                 <tr>
@@ -96,7 +98,7 @@ $album = (string) @$_REQUEST['album'];
                         <label for="song" class="form-label">Song</label>
                     </td>
                     <td>
-                        <input name="song" class="form-control" style="width: 500px;" value="<?= @htmlentities($song) ?>" /><br />
+                        <input size=100 name="song" class="form-control" style="width: 100%;" value="<?= @htmlentities($song) ?>" /><br />
                     </td>
                 </tr>
                 <tr>
@@ -104,7 +106,7 @@ $album = (string) @$_REQUEST['album'];
                         <label for="album" class="form-label"></label>Album</label>
                     </td>
                     <td>
-                        <input name="album" class="form-control" style="width: 500px;" value="<?= @htmlentities($album) ?>" /><br />
+                        <input name="album" class="form-control" style="width: 100%ף" value="<?= @htmlentities($album) ?>" /><br />
                     </td>
                 </tr>
             </table>
