@@ -16,6 +16,7 @@
 </head>
 
 <body>
+    <button onclick="javascript:window.history.back();">← Go Back ←</button>
     <ul>
     <?php
 
