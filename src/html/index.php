@@ -148,6 +148,8 @@ if (!empty($artist . $song . $album)) {
             @$dom->loadHTML($html);
             $xpath = new DOMXPath($dom);
 
+            // Downloader saves URL contents if filename of this regex format.
+            // See Downloader::filename() for implementation.
             preg_match('/.*-ifpi\.(\d+)\.html/', $file, $matches);
             $page = $matches[1];
 
