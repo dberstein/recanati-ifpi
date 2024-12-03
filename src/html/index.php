@@ -34,10 +34,18 @@ $album = (string) @$_REQUEST['album'];
             border: 1px solid black;
         }
 
-        form {
+        #forms {
             width: 90%;
             margin-left: 5%;
         }
+
+        /* form {
+            width: 100%;
+        }
+
+        input:not(button) {
+            width: 100%;
+        } */
 
         legend {
             font-size: 20px;
@@ -58,6 +66,7 @@ $album = (string) @$_REQUEST['album'];
 </head>
 
 <body>
+    <div id="forms">
     <form action="multi.php" method="POST" enctype="multipart/form-data">
         <fieldset>
             <legend>Upload CSV (artist,song,album)</legend>
@@ -68,7 +77,7 @@ $album = (string) @$_REQUEST['album'];
             <input type="submit" value="Upload" />
         </fieldset>
     </form>
-    ... or ...
+    <p>... or ...</p>
     <form>
         <fieldset>
             <legend>Search artist/song/album</legend>
@@ -101,6 +110,7 @@ $album = (string) @$_REQUEST['album'];
             <input type="submit" />
         </fieldset>
     </form>
+    </div>
 
     <a name="results" />
     <table id="results">
