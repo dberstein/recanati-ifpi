@@ -6,9 +6,17 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
+    <style>
+        iframe {
+            border: 1px solid black;
+            margin-left: 5%;
+            width: 90%;
+        }
+    </style>
 </head>
 
 <body>
+    <ul>
     <?php
 
     $file = $_FILES['fileToUpload']['tmp_name'];
@@ -24,7 +32,7 @@
             );
 
             printf(
-                "<b><a href='%s' target=_blank >%s - %s (%s)</a></b>\n",
+                "<li><b><a href='%s' target=_blank >%s - %s (%s)</a></b></li>\n",
                 $url,
                 htmlentities($data[0] ?? ''),
                 htmlentities($data[1] ?? ''),
@@ -32,13 +40,14 @@
             );
 
             printf(
-                "<iframe src='%s' width='100%%' scrolling=yes></iframe>\n",
+                "<iframe src='%s' width='100%%' scrolling=yes></iframe><br />\n",
                 $url
             );
         }
     }
 
     ?>
+    </ul>
 </body>
 
 </html>
