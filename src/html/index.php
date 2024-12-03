@@ -37,6 +37,11 @@ $album = (string) @$_REQUEST['album'];
         #forms {
             width: 90%;
             margin-left: 5%;
+            padding: 10px;
+        }
+
+        #upload-btn {
+            margin-top: 10px;
         }
 
         form {
@@ -77,7 +82,7 @@ $album = (string) @$_REQUEST['album'];
                 <input type="hidden" name="MAX_FILE_SIZE" value="524288" />
                 <input type="file" name="fileToUpload" class="form-control" id="fileToUpload" accept=".csv" />
             </div>
-            <input type="submit" value="Upload" />
+            <input type="submit" id="upload-btn" value="Upload" />
         </fieldset>
     </form>
     <p>... or ...</p>
