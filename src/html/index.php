@@ -111,7 +111,9 @@ $album = (string) @$_REQUEST['album'];
         </fieldset>
     </form>
     </div>
-
+<?php
+if (!empty($artist . $song . $album)) {
+?>
     <a name="results" />
     <table id="results">
         <tr>
@@ -187,6 +189,9 @@ $album = (string) @$_REQUEST['album'];
         }
         ?>
     </table>
+<?php
+}
+?>
 </body>
 
 </html>
