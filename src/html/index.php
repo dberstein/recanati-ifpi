@@ -71,8 +71,9 @@ $album = (string) @$_REQUEST['album'];
         <fieldset>
             <legend>Upload CSV (artist,song,album)</legend>
             <div>
+                <label for="fileToUpload" class="form-label">CSV file</label>
                 <input type="hidden" name="MAX_FILE_SIZE" value="524288" />
-                <input type="file" name="fileToUpload" id="fileToUpload" accept=".csv" />
+                <input type="file" name="fileToUpload" class="form-control" id="fileToUpload" accept=".csv" />
             </div>
             <input type="submit" value="Upload" />
         </fieldset>
@@ -84,26 +85,26 @@ $album = (string) @$_REQUEST['album'];
             <table>
                 <tr>
                     <td>
-                        <label for="artist">Artist</label>
+                        <label for="artist" class="form-label">Artist</label>
                     </td>
                     <td>
-                        <input name="artist" style="width: 500px;" value="<?= @htmlentities($artist) ?>" /><br />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label for="song">Song</label>
-                    </td>
-                    <td>
-                        <input name="song" style="width: 500px;" value="<?= @htmlentities($song) ?>" /><br />
+                        <input name="artist" class="form-control" style="width: 500px;" value="<?= @htmlentities($artist) ?>" /><br />
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <label for="album">Album</label>
+                        <label for="song" class="form-label">Song</label>
                     </td>
                     <td>
-                        <input name="album" style="width: 500px;" value="<?= @htmlentities($album) ?>" /><br />
+                        <input name="song" class="form-control" style="width: 500px;" value="<?= @htmlentities($song) ?>" /><br />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="album" class="form-label"></label>Album</label>
+                    </td>
+                    <td>
+                        <input name="album" class="form-control" style="width: 500px;" value="<?= @htmlentities($album) ?>" /><br />
                     </td>
                 </tr>
             </table>
