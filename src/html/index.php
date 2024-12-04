@@ -37,11 +37,11 @@ $album = (string) @$_REQUEST['album'];
         #forms {
             width: 90%;
             margin-left: 5%;
-            padding: 10px;
+            padding: 1em;
         }
 
         #upload-btn {
-            margin-top: 10px;
+            margin-top: 1em;
         }
 
         form {
@@ -50,12 +50,12 @@ $album = (string) @$_REQUEST['album'];
 
         fieldset {
             border: 1px solid black;
-            padding: 15px;
-            border-radius: 20px;
+            padding: 1.5em;
+            border-radius: 2em;
         }
 
         legend {
-            font-size: 20px;
+            font-size: 1.5em;
         }
 
         .g {
@@ -82,7 +82,7 @@ $album = (string) @$_REQUEST['album'];
                 <input type="hidden" name="MAX_FILE_SIZE" value="524288" />
                 <input type="file" name="fileToUpload" class="form-control" id="fileToUpload" accept=".csv" />
             </div>
-            <input type="submit" id="upload-btn" />
+            <input type="submit" id="upload-btn" class="btn btn-danger" />
         </fieldset>
     </form>
     <p style="font-weight: bolder;width:100%;text-align: center;">... or ...</p>
@@ -115,7 +115,7 @@ $album = (string) @$_REQUEST['album'];
                     </td>
                 </tr>
             </table>
-            <input type="submit" />
+            <input type="submit" class="btn btn-danger" />
         </fieldset>
     </form>
     </div>
