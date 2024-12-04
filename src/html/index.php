@@ -13,7 +13,8 @@ $song = (string) @$_REQUEST['song'];
 $album = (string) @$_REQUEST['album'];
 
 ?>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -95,7 +96,7 @@ $album = (string) @$_REQUEST['album'];
                         <label for="artist" class="form-label">Artist</label>
                     </td>
                     <td>
-                        <input name="artist" class="form-control" style="width: 100%;" value="<?= @htmlentities($artist) ?>" /><br />
+                        <input name="artist" id="artist" class="form-control" style="width: 100%;" value="<?= @htmlentities($artist) ?>" /><br />
                     </td>
                 </tr>
                 <tr>
@@ -103,15 +104,15 @@ $album = (string) @$_REQUEST['album'];
                         <label for="song" class="form-label">Song</label>
                     </td>
                     <td>
-                        <input size=100 name="song" class="form-control" style="width: 100%;" value="<?= @htmlentities($song) ?>" /><br />
+                        <input size=100 id="song" name="song" class="form-control" style="width: 100%;" value="<?= @htmlentities($song) ?>" /><br />
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <label for="album" class="form-label"></label>Album</label>
+                        <label for="album" class="form-label">Album</label>
                     </td>
                     <td>
-                        <input name="album" class="form-control" style="width: 100%ף" value="<?= @htmlentities($album) ?>" /><br />
+                        <input name="album" id="album" class="form-control" style="width: 100%ף" value="<?= @htmlentities($album) ?>" /><br />
                     </td>
                 </tr>
             </table>
