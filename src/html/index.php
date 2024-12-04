@@ -85,7 +85,7 @@ $album = (string) @$_REQUEST['album'];
             <input type="submit" id="upload-btn" value="Upload" />
         </fieldset>
     </form>
-    <p>... or ...</p>
+    <p style="font-weight: bolder;width:100%;text-align: center;">... or ...</p>
     <form>
         <fieldset class="bg-primary-subtle">
             <legend>Search artist/song/album</legend>
@@ -188,7 +188,7 @@ if (!empty($artist . $song . $album)) {
 
             if ($n > 0) {
                 printf(
-                    "<tr><td colspan=4 class='source'><a href='%s'>↑ source ↑</a></td></tr>\n",
+                    "<tr><td colspan=4 class='source'><a href='%s' target=_blank>↑ source ↑</a></td></tr>\n",
                     $ifpi->url($page),
                 );
             }
