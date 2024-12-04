@@ -26,11 +26,11 @@ $album = (string) @$_REQUEST['album'];
             margin-left: 5%;
         }
 
-        table#results th {
+        table#results thead th {
             border: 1px solid black;
         }
 
-        table#results td {
+        table#results tbody td {
             border: 1px solid black;
         }
 
@@ -75,7 +75,7 @@ $album = (string) @$_REQUEST['album'];
 <body>
     <div id="forms">
     <form action="multi.php" method="POST" enctype="multipart/form-data">
-        <fieldset>
+        <fieldset class="bg-primary-subtle">
             <legend>Upload CSV (artist,song,album)</legend>
             <div>
                 <label for="fileToUpload" class="form-label">CSV file</label>
@@ -87,7 +87,7 @@ $album = (string) @$_REQUEST['album'];
     </form>
     <p>... or ...</p>
     <form>
-        <fieldset>
+        <fieldset class="bg-primary-subtle">
             <legend>Search artist/song/album</legend>
             <table>
                 <tr>
@@ -123,13 +123,16 @@ $album = (string) @$_REQUEST['album'];
 if (!empty($artist . $song . $album)) {
 ?>
     <a name="results" />
-    <table id="results">
+    <table id="results" class="table">
+        <thead>
         <tr>
             <th>#</th>
             <th style="width 33%">Artist</th>
             <th style="width 33%">Song</th>
             <th style="width 33%">Album</th>
         </tr>
+        </thead>
+        <tbody>
         <?php
 
         $ifpi = new Ifpi($artist, $song, $album);
@@ -198,6 +201,7 @@ if (!empty($artist . $song . $album)) {
             );
         }
         ?>
+        </tbody>
     </table>
 <?php
 }

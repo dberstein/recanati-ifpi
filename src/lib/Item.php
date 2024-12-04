@@ -23,7 +23,7 @@ class Item
 
         return sprintf(
             "<tr class='%s'><td style='text-align: center'><b>%d</b></td><td>%s</td><td>%s</td><td>%s</td></tr>\n",
-            $this->allowed ? 'g' : 'r',
+            $this->allowed ? 'table-success' : 'table-danger',
             ++$idx,
             htmlentities($this->artist),
             htmlentities($this->song),
