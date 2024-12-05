@@ -16,27 +16,34 @@ $album = (string) @$_REQUEST['album'];
 <!DOCTYPE html>
 <html lang="en">
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-    const fileInput = document.getElementById('fileToUpload');
-    const submitButton = document.getElementById('upload-btn');
+    document.addEventListener('DOMContentLoaded', () => {
+        const fileInput = document.getElementById('fileToUpload');
+        const submitButton = document.getElementById('upload-btn');
 
-    submitButton.disabled = true;
+        submitButton.disabled = true;
 
-    fileInput.addEventListener('change', () => {
-        submitButton.disabled = fileInput.files.length === 0;
+        fileInput.addEventListener('change', () => {
+            submitButton.disabled = fileInput.files.length === 0;
+        });
     });
-});
 </script>
+
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Music search engine.">
+    <title>IFPI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
     <style>
         table#results {
             border-collapse: collapse;
             border: 1px solid black;
-            width: 90%;
-            margin-left: 5%;
+            width: 100%;
+            margin-left: 0%;
+            margin-right: 0%;
         }
 
         table#results thead th {
@@ -87,138 +94,152 @@ document.addEventListener('DOMContentLoaded', () => {
 
 <body>
     <div id="forms">
-    <form action="multi.php" method="POST" enctype="multipart/form-data">
-        <fieldset class="bg-primary-subtle">
-            <legend>Upload CSV (artist,song,album)</legend>
-            <div>
-                <label for="fileToUpload" class="form-label">CSV file</label>
-                <input type="hidden" name="MAX_FILE_SIZE" value="524288" />
-                <input type="file" name="fileToUpload" class="form-control" id="fileToUpload" accept=".csv" />
-            </div>
-            <input type="submit" id="upload-btn" class="btn btn-danger" />
-        </fieldset>
-    </form>
-    <p style="font-weight: bolder;width:100%;text-align: center;">... or ...</p>
-    <form>
-        <fieldset class="bg-primary-subtle">
-            <legend>Search artist/song/album</legend>
-            <table>
-                <tr>
-                    <td>
-                        <label for="artist" class="form-label">Artist</label>
-                    </td>
-                    <td>
-                        <input name="artist" id="artist" class="form-control" style="width: 100%;" value="<?= @htmlentities($artist) ?>" /><br />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label for="song" class="form-label">Song</label>
-                    </td>
-                    <td>
-                        <input size=100 id="song" name="song" class="form-control" style="width: 100%;" value="<?= @htmlentities($song) ?>" /><br />
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label for="album" class="form-label">Album</label>
-                    </td>
-                    <td>
-                        <input name="album" id="album" class="form-control" style="width: 100%ף" value="<?= @htmlentities($album) ?>" /><br />
-                    </td>
-                </tr>
-            </table>
-            <input type="submit" class="btn btn-danger" />
-        </fieldset>
-    </form>
+        <table>
+            <tr>
+                <td>
+                    <form action="multi.php" method="POST" enctype="multipart/form-data">
+                        <fieldset class="bg-primary-subtle">
+                            <legend>Upload CSV (artist,song,album)</legend>
+                            <div>
+                                <label for="fileToUpload" class="form-label">CSV file</label>
+                                <input type="hidden" name="MAX_FILE_SIZE" value="524288" />
+                                <input type="file" name="fileToUpload" class="form-control" id="fileToUpload"
+                                    accept=".csv" />
+                            </div>
+                            <input type="submit" id="upload-btn" class="btn btn-danger" />
+                        </fieldset>
+                    </form>
+                </td>
+                <td>
+                    <p style="font-weight: bolder;width:1%;text-align: center;">or</p>
+                </td>
+                <td>
+                    <form>
+                        <fieldset class="bg-primary-subtle">
+                            <legend>Search artist/song/album</legend>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <label for="artist" class="form-label">Artist</label>
+                                    </td>
+                                    <td>
+                                        <input name="artist" id="artist" class="form-control" style="width: 100%;"
+                                            value="<?= @htmlentities($artist) ?>" /><br />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label for="song" class="form-label">Song</label>
+                                    </td>
+                                    <td>
+                                        <input size=100 id="song" name="song" class="form-control" style="width: 100%;"
+                                            value="<?= @htmlentities($song) ?>" /><br />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label for="album" class="form-label">Album</label>
+                                    </td>
+                                    <td>
+                                        <input name="album" id="album" class="form-control" style="width: 100%ף"
+                                            value="<?= @htmlentities($album) ?>" /><br />
+                                    </td>
+                                </tr>
+                            </table>
+                            <input type="submit" class="btn btn-danger" />
+                        </fieldset>
+                    </form>
+                </td>
+            </tr>
+        </table>
     </div>
-<?php
-if (!empty($artist . $song . $album)) {
-?>
-    <a name="results" />
-    <table id="results" class="table">
-        <thead>
-        <tr>
-            <th>#</th>
-            <th style="width 33%">Artist</th>
-            <th style="width 33%">Song</th>
-            <th style="width 33%">Album</th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php
+    <?php
+    if (!empty($artist . $song . $album)) {
+        ?>
+        <a name="results" />
+        <table id="results" class="table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th style="width 33%">Artist</th>
+                    <th style="width 33%">Song</th>
+                    <th style="width 33%">Album</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
 
-        $ifpi = new Ifpi($artist, $song, $album);
+                $ifpi = new Ifpi($artist, $song, $album);
 
-        $urls = [
-            $ifpi->url(1),
-            $ifpi->url(2),
-            $ifpi->url(3),
-            $ifpi->url(4),
-        ];
+                $urls = [
+                    $ifpi->url(1),
+                    $ifpi->url(2),
+                    $ifpi->url(3),
+                    $ifpi->url(4),
+                ];
 
-        $downloader = new Downloader(...$urls);
-        if (!empty($artist . $song . $album)) {
-            $downloader->do();
-        }
-
-        $i = 0;
-        $page = 0;
-        foreach ($downloader->contents() as $file => $html) {
-            if (!trim($html)) {
-                continue;
-            }
-            $dom = new DOMDocument('1.0');
-            @$dom->loadHTML($html);
-            $xpath = new DOMXPath($dom);
-
-            // Downloader saves URL contents if filename of this regex format.
-            // See Downloader::filename() for implementation.
-            preg_match('/.*-ifpi\.(\d+)\.html/', $file, $matches);
-            $page = $matches[1];
-
-            $n = 0;
-
-            foreach ($xpath->query("//*[@id]") as $elem) {
-                if (!preg_match('/^c[0-9]+/', $elem->id)) {
-                    continue;
+                $downloader = new Downloader(...$urls);
+                if (!empty($artist . $song . $album)) {
+                    $downloader->do();
                 }
 
-                $i++;
-                $n++;
+                $i = 0;
+                $page = 0;
+                foreach ($downloader->contents() as $file => $html) {
+                    if (!trim($html)) {
+                        continue;
+                    }
+                    $dom = new DOMDocument('1.0');
+                    @$dom->loadHTML($html);
+                    $xpath = new DOMXPath($dom);
 
-                $lines = array_filter(array_map(function ($s) {
-                    return trim($s);
-                }, explode("\n", $elem->textContent)));
+                    // Downloader saves URL contents if filename of this regex format.
+                    // See Downloader::filename() for implementation.
+                    preg_match('/.*-ifpi\.(\d+)\.html/', $file, $matches);
+                    $page = $matches[1];
 
-                echo new Item(
-                    $ifpi->allowed($xpath, $i),
-                    trim($lines[1]),
-                    trim($lines[2]),
-                    trim($lines[4]),
-                );
-            }
+                    $n = 0;
 
-            if ($n > 0) {
-                printf(
-                    "<tr><td colspan=4 class='source'><a href='%s' target=_blank>↑ source ↑</a></td></tr>\n",
-                    $ifpi->url($page),
-                );
-            }
-        }
+                    foreach ($xpath->query("//*[@id]") as $elem) {
+                        if (!preg_match('/^c[0-9]+/', $elem->id)) {
+                            continue;
+                        }
 
-        if (!empty($artist . $song . $album) && $i == 0) {
-            printf(
-                "<tr><td colspan=4 class='source'>%s</td></tr>\n",
-                "No results found",
-            );
-        }
-        ?>
-        </tbody>
-    </table>
-<?php
-}
-?>
+                        $i++;
+                        $n++;
+
+                        $lines = array_filter(array_map(function ($s) {
+                            return trim($s);
+                        }, explode("\n", $elem->textContent)));
+
+                        echo new Item(
+                            $ifpi->allowed($xpath, $i),
+                            trim($lines[1]),
+                            trim($lines[2]),
+                            trim($lines[4]),
+                        );
+                    }
+
+                    if ($n > 0) {
+                        printf(
+                            "<tr><td colspan=4 class='source'><a href='%s' target=_blank>↑ source ↑</a></td></tr>\n",
+                            $ifpi->url($page),
+                        );
+                    }
+                }
+
+                if (!empty($artist . $song . $album) && $i == 0) {
+                    printf(
+                        "<tr><td colspan=4 class='source'>%s</td></tr>\n",
+                        "No results found",
+                    );
+                }
+                ?>
+            </tbody>
+        </table>
+        <?php
+    }
+    ?>
 </body>
 
 </html>
