@@ -55,9 +55,9 @@ $album = (string) @$_REQUEST['album'];
         }
 
         #forms {
-            width: 90%;
-            margin-left: 5%;
-            padding: 1em;
+            width: 100%;
+            margin-left: 2em;
+            margin-right: 2em;;
         }
 
         #upload-btn {
@@ -132,7 +132,7 @@ $album = (string) @$_REQUEST['album'];
                                         <label for="song" class="form-label">Song</label>
                                     </td>
                                     <td>
-                                        <input size=100 id="song" name="song" class="form-control" style="width: 100%;"
+                                        <input size=50 id="song" name="song" class="form-control" style="width: 100%;"
                                             value="<?= @htmlentities($song) ?>" /><br />
                                     </td>
                                 </tr>

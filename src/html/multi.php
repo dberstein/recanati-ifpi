@@ -9,8 +9,19 @@
     <style>
         iframe {
             border: 1px solid black;
-            margin-left: 5%;
-            width: 90%;
+            margin-left: 0;
+            margin-right: 0;
+            width: 100%;
+        }
+
+        .container {
+            background-image: url('/spinner.gif');
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .container iframe {
+            background: transparent;
         }
     </style>
 </head>
@@ -18,36 +29,36 @@
 <body>
     <button onclick="javascript:window.history.back();">← Go Back ←</button>
     <ul>
-    <?php
+        <?php
 
-    $file = $_FILES['fileToUpload']['tmp_name'];
-    if (!empty($file) && false !== ($fh = fopen($file, 'r'))) {
-        while (($data = fgetcsv($fh, 1000, ",")) !== false) {
-            $url = sprintf(
-                '/?%s#results',
-                http_build_query([
-                    'artist' => $data[0] ?? '',
-                    'song' => $data[1] ?? '',
-                    'album' => $data[2] ?? '',
-                ]),
-            );
+        $file = $_FILES['fileToUpload']['tmp_name'];
+        if (!empty($file) && false !== ($fh = fopen($file, 'r'))) {
+            while (($data = fgetcsv($fh, 1000, ",")) !== false) {
+                $url = sprintf(
+                    '/?%s#results',
+                    http_build_query([
+                        'artist' => $data[0] ?? '',
+                        'song' => $data[1] ?? '',
+                        'album' => $data[2] ?? '',
+                    ]),
+                );
 
-            printf(
-                "<li><b><a href='%s' target=_blank >%s - %s (%s)</a></b></li>\n",
-                $url,
-                htmlentities($data[0] ?? ''),
-                htmlentities($data[1] ?? ''),
-                htmlentities($data[2] ?? ''),
-            );
+                printf(
+                    "<li><b><a href='%s' target=_blank >%s - %s (%s)</a></b></li>\n",
+                    $url,
+                    htmlentities($data[0] ?? ''),
+                    htmlentities($data[1] ?? ''),
+                    htmlentities($data[2] ?? ''),
+                );
 
-            printf(
-                "<iframe src='%s' width='100%%' scrolling=yes></iframe><br />\n",
-                $url
-            );
+                printf(
+                    "<div class='container'><iframe src='%s' width='100%%' scrolling=yes></iframe></div><br />\n",
+                    $url
+                );
+            }
         }
-    }
 
-    ?>
+        ?>
     </ul>
 </body>
 
