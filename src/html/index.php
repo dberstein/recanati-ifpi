@@ -11,13 +11,14 @@ use Daniel\Ifpi\Downloader;
 $artist = (string) @$_REQUEST['artist'];
 $song = (string) @$_REQUEST['song'];
 $album = (string) @$_REQUEST['album'];
+$fetch = (!$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch'];
 
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=0.7">
     <meta name="description" content="Music search engine.">
     <title>IFPI 99fm</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -127,6 +128,15 @@ $album = (string) @$_REQUEST['album'];
                                 <input type="file" name="fileToUpload" class="form-control" id="fileToUpload"
                                     accept=".csv" />
                             </div>
+                            <label for="fetchUpload" class="form-label">Fetch pages</label>
+                            <select id="fetchUpload" name="fetch">
+                            <?php
+                                foreach ([1, 2, 3, 4] as $p) {
+                                    $s = ($p == $fetch) ? 'selected' : '';
+                                    printf("<option value=%d %s>%d page(s)</option>\n", $p, $s, $p);
+                                }
+                            ?>
+                            </select>
                             <input type="submit" id="upload-btn" class="btn btn-danger" />
                         </fieldset>
                     </form>
@@ -166,6 +176,21 @@ $album = (string) @$_REQUEST['album'];
                                             value="<?= @htmlentities($album) ?>" /><br />
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td>
+                                        <label for="fetch" class="form-label">Fetch pages</label>
+                                    </td>
+                                    <td>
+                                        <select id="fetch" name="fetch">
+                                        <?php
+                                            foreach ([1, 2, 3, 4] as $p) {
+                                                $s = ($p == $fetch) ? 'selected' : '';
+                                                printf("<option value=%d %s>%d page(s)</option>\n", $p, $s, $p);
+                                            }
+                                        ?>
+                                        </select>
+                                    </td>
+                                </tr>
                             </table>
                             <input type="submit" class="btn btn-danger" />
                         </fieldset>
@@ -193,12 +218,10 @@ $album = (string) @$_REQUEST['album'];
 
                 $ifpi = new Ifpi($artist, $song, $album);
 
-                $urls = [
-                    $ifpi->url(1),
-                    $ifpi->url(2),
-                    $ifpi->url(3),
-                    $ifpi->url(4),
-                ];
+                $urls = [];
+                for ($i = 0; $i < $fetch;  $i++) {
+                    $urls[] = $ifpi->url($i+1);
+                }
 
                 $downloader = new Downloader(...$urls);
                 if (!empty($artist . $song . $album)) {

@@ -6,6 +6,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
+    <title>IFPI 99fm: multi</title>
     <style>
         iframe {
             border: 1px solid black;
@@ -40,6 +41,7 @@
                         'artist' => $data[0] ?? '',
                         'song' => $data[1] ?? '',
                         'album' => $data[2] ?? '',
+                        'fetch' => (!$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch'],
                     ]),
                 );
 
