@@ -60,6 +60,12 @@ $album = (string) @$_REQUEST['album'];
             margin-right: 2em;;
         }
 
+        #forms table {
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
         #upload-btn {
             margin-top: 1em;
         }
