@@ -27,7 +27,7 @@
 </head>
 
 <body>
-    <button onclick="javascript:window.history.back();">← Go Back ←</button>
+    <h1><a href="/" class="btn btn-warning" style="text-decoration: none; margin: 1em;">← back ←</a></h1>
     <ul>
         <?php
 

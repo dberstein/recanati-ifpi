@@ -18,21 +18,30 @@ class Downloader
         $this->rand = mt_rand(1000, 9999);
     }
 
-    public function add(string $url)
+    public function add(string $url): void
     {
         $this->urls[] = $url;
     }
 
-    public function filename(string $url)
+    public function filename(string $url): string
     {
         $page=null;
         if (preg_match('/&page=(\d+)/', $url, $matches)) {
             $page = $matches[1];
         }
+        // See Downloader::getFilePage() for reverse operation.
         return sprintf("/tmp/%s-%d-ifpi.%d.html", md5($url), $this->rand, $page);
     }
 
-    public function prepare()
+    public function getFilePage(string $file): int
+    {
+        // Downloader saves URL contents in filename of this regex format.
+        // See Downloader::filename() for implementation.
+        preg_match('/.*-ifpi\.(\d+)\.html/', $file, $matches);
+        return (int) $matches[1];
+    }
+
+    public function prepare(): void
     {
         $this->multi_handle = curl_multi_init();
         $this->handles = [];
@@ -50,7 +59,7 @@ class Downloader
         }
     }
 
-    public function do()
+    public function do(): void
     {
         $this->prepare();
 
@@ -62,7 +71,7 @@ class Downloader
         $this->cleanup();
     }
 
-    public function cleanup()
+    public function cleanup(): void
     {
         foreach ($this->urls as $key => $url) {
             curl_multi_remove_handle($this->multi_handle, $this->handles[$key]);
@@ -72,7 +81,7 @@ class Downloader
         curl_multi_close($this->multi_handle);
     }
 
-    public function contents()
+    public function contents(): array
     {
         $contents = [];
         foreach ($this->urls as $key => $url) {

@@ -29,11 +29,16 @@ $album = (string) @$_REQUEST['album'];
         document.addEventListener('DOMContentLoaded', () => {
             const fileInput = document.getElementById('fileToUpload');
             const submitButton = document.getElementById('upload-btn');
-
             submitButton.disabled = true;
-
             fileInput.addEventListener('change', () => {
                 submitButton.disabled = fileInput.files.length === 0;
+            });
+
+            const form = document.getElementById('searchform');
+            const spinner = document.getElementById('spinner');
+            form.addEventListener('submit', (e) => {
+                form.classList.toggle('fade-out');
+                spinner.classList.toggle('show');
             });
         });
     </script>
@@ -206,17 +211,13 @@ $album = (string) @$_REQUEST['album'];
                     if (!trim($html)) {
                         continue;
                     }
+
                     $dom = new DOMDocument('1.0');
                     @$dom->loadHTML($html);
                     $xpath = new DOMXPath($dom);
-
-                    // Downloader saves URL contents if filename of this regex format.
-                    // See Downloader::filename() for implementation.
-                    preg_match('/.*-ifpi\.(\d+)\.html/', $file, $matches);
-                    $page = $matches[1];
+                    $page = $downloader->getFilePage($file);
 
                     $n = 0;
-
                     foreach ($xpath->query("//*[@id]") as $elem) {
                         if (!preg_match('/^c[0-9]+/', $elem->id)) {
                             continue;
@@ -257,16 +258,6 @@ $album = (string) @$_REQUEST['album'];
         <?php
     }
     ?>
-    <script>
-        const form = document.getElementById('searchform');
-        const spinner = document.getElementById('spinner');
-
-        form.addEventListener('submit', (e) => {
-            // e.preventDefault();
-            form.classList.toggle('fade-out');
-            spinner.classList.toggle('show');
-        });
-    </script>
 </body>
 
 </html>
