@@ -128,12 +128,12 @@ $fetch = (!$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch'];
                                 <input type="file" name="fileToUpload" class="form-control" id="fileToUpload"
                                     accept=".csv" />
                             </div>
-                            <label for="fetchUpload" class="form-label">Fetch pages</label>
+                            <label for="fetchUpload" class="form-label">Limit results:</label>
                             <select id="fetchUpload" name="fetch">
                             <?php
                                 foreach ([1, 2, 3, 4] as $p) {
                                     $s = ($p == $fetch) ? 'selected' : '';
-                                    printf("<option value=%d %s>%d page(s)</option>\n", $p, $s, $p);
+                                    printf("<option value=%d %s>%d</option>\n", $p, $s, $p*25);
                                 }
                             ?>
                             </select>
@@ -178,14 +178,14 @@ $fetch = (!$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch'];
                                 </tr>
                                 <tr>
                                     <td>
-                                        <label for="fetch" class="form-label">Fetch pages</label>
+                                        <label for="fetch" class="form-label">Limit results</label>
                                     </td>
                                     <td>
                                         <select id="fetch" name="fetch">
                                         <?php
                                             foreach ([1, 2, 3, 4] as $p) {
                                                 $s = ($p == $fetch) ? 'selected' : '';
-                                                printf("<option value=%d %s>%d page(s)</option>\n", $p, $s, $p);
+                                                printf("<option value=%d %s>%d</option>\n", $p, $s, $p*25);
                                             }
                                         ?>
                                         </select>
