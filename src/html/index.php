@@ -15,18 +15,6 @@ $album = (string) @$_REQUEST['album'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const fileInput = document.getElementById('fileToUpload');
-        const submitButton = document.getElementById('upload-btn');
-
-        submitButton.disabled = true;
-
-        fileInput.addEventListener('change', () => {
-            submitButton.disabled = fileInput.files.length === 0;
-        });
-    });
-</script>
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -37,11 +25,24 @@ $album = (string) @$_REQUEST['album'];
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const fileInput = document.getElementById('fileToUpload');
+            const submitButton = document.getElementById('upload-btn');
+
+            submitButton.disabled = true;
+
+            fileInput.addEventListener('change', () => {
+                submitButton.disabled = fileInput.files.length === 0;
+            });
+        });
+    </script>
     <style>
         table#results {
             border-collapse: collapse;
             border: 1px solid black;
             width: 100%;
+            margin-top: 5em;
             margin-left: 0%;
             margin-right: 0%;
         }
@@ -57,7 +58,8 @@ $album = (string) @$_REQUEST['album'];
         #forms {
             width: 100%;
             margin-left: 2em;
-            margin-right: 2em;;
+            margin-right: 2em;
+            ;
         }
 
         #forms table {
@@ -95,6 +97,14 @@ $album = (string) @$_REQUEST['album'];
         .source {
             text-align: center;
         }
+
+        .hide {
+            display: none;
+        }
+
+        .show {
+            display: block;
+        }
     </style>
 </head>
 
@@ -120,7 +130,7 @@ $album = (string) @$_REQUEST['album'];
                     <p style="font-weight: bolder;width:1%;text-align: center;">or</p>
                 </td>
                 <td>
-                    <form>
+                    <form id="searchform">
                         <fieldset class="bg-primary-subtle">
                             <legend>Search artist/song/album</legend>
                             <table>
@@ -159,6 +169,7 @@ $album = (string) @$_REQUEST['album'];
             </tr>
         </table>
     </div>
+    <img src="/spinner.gif" id="spinner" class="hide" />
     <?php
     if (!empty($artist . $song . $album)) {
         ?>
@@ -246,6 +257,16 @@ $album = (string) @$_REQUEST['album'];
         <?php
     }
     ?>
+    <script>
+        const form = document.getElementById('searchform');
+        const spinner = document.getElementById('spinner');
+
+        form.addEventListener('submit', (e) => {
+            // e.preventDefault();
+            form.classList.toggle('fade-out');
+            spinner.classList.toggle('show');
+        });
+    </script>
 </body>
 
 </html>
