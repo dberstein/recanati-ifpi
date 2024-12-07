@@ -13,6 +13,7 @@
             border: 1px solid black;
             overflow: scroll;
             background: transparent;
+            border-radius: 10px;
         }
 
         .container {
@@ -24,7 +25,6 @@
         }
 
         ul {
-            /* list-style-type: none; */
             margin: 0;
         }
     </style>
@@ -51,7 +51,7 @@
                 );
 
                 printf(
-                    "<li>&nbsp;&nbsp;<b><a class='btn btn-secondary' href='%s' target=_blank >%s - %s (%s)</a></b></li>\n",
+                    "<li>&nbsp;<b><a class='btn btn-secondary' href='%s' target=_blank style='text-decoration: underline;'>%s - %s (%s)</a></b></li>\n",
                     $url,
                     htmlentities($data[0] ?? ''),
                     htmlentities($data[1] ?? ''),
