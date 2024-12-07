@@ -149,7 +149,7 @@ $fetch = (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch'];
                     <p style="font-weight: bolder;width:1%;text-align: center;">or</p>
                 </td>
                 <td>
-                    <form id="searchform">
+                    <form id="searchform" action="/#results">
                         <fieldset class="bg-primary-subtle">
                             <legend>Search by artist/song/album</legend>
                             <table>
