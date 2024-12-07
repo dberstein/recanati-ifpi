@@ -9,16 +9,17 @@
     <title>IFPI 99fm: multi</title>
     <style>
         iframe {
-            border: 1px solid black;
-            margin-left: 0;
-            margin-right: 0;
             width: 100%;
+            border: 1px solid black;
+            overflow: scroll;
         }
 
         .container {
             background-image: url('/spinner.gif');
             background-position: center;
             background-repeat: no-repeat;
+            padding: 0;
+            margin: 0;
         }
 
         .container iframe {
@@ -54,7 +55,7 @@
                 );
 
                 printf(
-                    "<div class='container'><iframe src='%s' width='100%%' scrolling=yes></iframe></div><br />\n",
+                    "<div class='container'><iframe src='%s'></iframe></div><br />\n",
                     $url
                 );
             }

@@ -92,6 +92,10 @@ $fetch = (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch'];
             font-size: 1.5em;
         }
 
+        #multi select {
+            margin-top: 1em;
+        }
+
         .g {
             background-color: #9de59d;
         }
@@ -119,15 +123,15 @@ $fetch = (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch'];
         <table>
             <tr>
                 <td>
-                    <form action="multi.php" method="POST" enctype="multipart/form-data">
+                    <form id="multi" action="multi.php" method="POST" enctype="multipart/form-data">
                         <fieldset class="bg-primary-subtle">
-                            <legend>Upload CSV (artist,song,album)</legend>
+                            <legend>Upload CSV file (artist,song,album)</legend>
                             <div>
-                                <label for="fileToUpload" class="form-label">CSV file</label>
+                                <label for="fileToUpload" class="form-label">CSV file:</label>
                                 <input type="hidden" name="MAX_FILE_SIZE" value="524288" />
                                 <input type="file" name="fileToUpload" class="form-control" id="fileToUpload"
                                     accept=".csv" />
-                                <label for="fetchUpload" class="form-label">#</label>
+                                <label for="fetchUpload" class="form-label">#:</label>
                                 <select id="fetchUpload" name="fetch">
                                 <?php
                                     foreach ([1, 2, 3, 4] as $p) {
@@ -147,11 +151,11 @@ $fetch = (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch'];
                 <td>
                     <form id="searchform">
                         <fieldset class="bg-primary-subtle">
-                            <legend>Search artist/song/album</legend>
+                            <legend>Search by artist/song/album</legend>
                             <table>
                                 <tr>
                                     <td>
-                                        <label for="artist" class="form-label">Artist</label>
+                                        <label for="artist" class="form-label">Artist:</label>
                                     </td>
                                     <td>
                                         <input name="artist" id="artist" class="form-control" style="width: 100%;"
@@ -160,7 +164,7 @@ $fetch = (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch'];
                                 </tr>
                                 <tr>
                                     <td>
-                                        <label for="song" class="form-label">Song</label>
+                                        <label for="song" class="form-label">Song:</label>
                                     </td>
                                     <td>
                                         <input size=50 id="song" name="song" class="form-control" style="width: 100%;"
@@ -169,7 +173,7 @@ $fetch = (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch'];
                                 </tr>
                                 <tr>
                                     <td>
-                                        <label for="album" class="form-label">Album</label>
+                                        <label for="album" class="form-label">Album:</label>
                                     </td>
                                     <td>
                                         <input name="album" id="album" class="form-control" style="width: 100%ף"
@@ -178,7 +182,7 @@ $fetch = (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch'];
                                 </tr>
                                 <tr>
                                     <td>
-                                        <label for="fetch" class="form-label">#</label>
+                                        <label for="fetch" class="form-label">#:</label>
                                     </td>
                                     <td>
                                         <select id="fetch" name="fetch">
