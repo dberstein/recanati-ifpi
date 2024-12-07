@@ -11,7 +11,7 @@ use Daniel\Ifpi\Downloader;
 $artist = (string) @$_REQUEST['artist'];
 $song = (string) @$_REQUEST['song'];
 $album = (string) @$_REQUEST['album'];
-$fetch = (!$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch'];
+$fetch = (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch'];
 
 ?>
 <!DOCTYPE html>
