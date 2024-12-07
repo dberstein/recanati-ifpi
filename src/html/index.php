@@ -108,6 +108,12 @@ $fetch = (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch'];
             text-align: center;
         }
 
+        .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
         .hide {
             display: none;
         }
@@ -133,14 +139,14 @@ $fetch = (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch'];
                                     accept=".csv" />
                                 <label for="fetchUpload" class="form-label">#:</label>
                                 <select id="fetchUpload" name="fetch">
-                                <?php
+                                    <?php
                                     foreach ([1, 2, 3, 4] as $p) {
                                         $s = ($p == $fetch) ? 'selected' : '';
-                                        printf("<option value=%d %s>%d</option>\n", $p, $s, $p*25);
+                                        printf("<option value=%d %s>%d</option>\n", $p, $s, $p * 25);
                                     }
-                                ?>
+                                    ?>
                                 </select>
-                            </div>                            
+                            </div>
                             <input type="submit" id="upload-btn" class="btn btn-danger" />
                         </fieldset>
                     </form>
@@ -186,12 +192,12 @@ $fetch = (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch'];
                                     </td>
                                     <td>
                                         <select id="fetch" name="fetch">
-                                        <?php
+                                            <?php
                                             foreach ([1, 2, 3, 4] as $p) {
                                                 $s = ($p == $fetch) ? 'selected' : '';
-                                                printf("<option value=%d %s>%d</option>\n", $p, $s, $p*25);
+                                                printf("<option value=%d %s>%d</option>\n", $p, $s, $p * 25);
                                             }
-                                        ?>
+                                            ?>
                                         </select>
                                     </td>
                                 </tr>
@@ -203,7 +209,7 @@ $fetch = (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch'];
             </tr>
         </table>
     </div>
-    <img src="/spinner.gif" id="spinner" class="hide" />
+    <img src="/spinner.gif" id="spinner" class="hide center" />
     <?php
     if (!empty($artist . $song . $album)) {
         ?>
@@ -223,8 +229,8 @@ $fetch = (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch'];
                 $ifpi = new Ifpi($artist, $song, $album);
 
                 $urls = [];
-                for ($i = 0; $i < $fetch;  $i++) {
-                    $urls[] = $ifpi->url($i+1);
+                for ($i = 0; $i < $fetch; $i++) {
+                    $urls[] = $ifpi->url($i + 1);
                 }
 
                 $downloader = new Downloader(...$urls);
