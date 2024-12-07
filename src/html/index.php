@@ -47,6 +47,12 @@ $fetch = (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch'];
                 form.classList.toggle('fade-out');
                 spinner.classList.toggle('show');
             });
+
+            // scroll to #results if table exists
+            const results = document.getElementById('results');
+            if (results) {
+                location.hash = "#results";
+            }
         });
     </script>
     <style>
@@ -161,7 +167,7 @@ $fetch = (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch'];
                     <p style="font-weight: bolder;width:1%;text-align: center;">or</p>
                 </td>
                 <td>
-                    <form id="searchform" action="/#results">
+                    <form id="searchform">
                         <fieldset class="bg-primary-subtle">
                             <legend>Search by artist/song/album</legend>
                             <table>
