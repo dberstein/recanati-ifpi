@@ -12,6 +12,7 @@
             width: 100%;
             border: 1px solid black;
             overflow: scroll;
+            background: transparent;
         }
 
         .container {
@@ -22,15 +23,18 @@
             margin: 0;
         }
 
-        .container iframe {
-            background: transparent;
+        ul {
+            /* list-style-type: none; */
+            margin: 0;
         }
     </style>
 </head>
 
 <body>
-    <h1><a href="/" class="btn btn-warning" style="text-decoration: none; margin: 1em;">← back ←</a></h1>
-    <ul>
+    <h1>
+        <a href="/" class="btn btn-warning" style="text-decoration: none; margin: 1em;">← back ←</a>
+    </h1>
+    <ol>
         <?php
 
         $file = $_FILES['fileToUpload']['tmp_name'];
@@ -47,7 +51,7 @@
                 );
 
                 printf(
-                    "<li><b><a href='%s' target=_blank >%s - %s (%s)</a></b></li>\n",
+                    "<li>&nbsp;&nbsp;<b><a class='btn btn-secondary' href='%s' target=_blank >%s - %s (%s)</a></b></li>\n",
                     $url,
                     htmlentities($data[0] ?? ''),
                     htmlentities($data[1] ?? ''),
@@ -62,7 +66,7 @@
         }
 
         ?>
-    </ul>
+    </ol>
 </body>
 
 </html>
