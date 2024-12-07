@@ -8,6 +8,12 @@ use Daniel\Ifpi\Ifpi;
 use Daniel\Ifpi\Item;
 use Daniel\Ifpi\Downloader;
 
+// file submission signals multi request
+if (count($_FILES)) {
+    require_once 'multi.php';
+    die();
+}
+
 $artist = (string) @$_REQUEST['artist'];
 $song = (string) @$_REQUEST['song'];
 $album = (string) @$_REQUEST['album'];
@@ -129,7 +135,7 @@ $fetch = (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch'];
         <table>
             <tr>
                 <td>
-                    <form id="multi" action="multi.php" method="POST" enctype="multipart/form-data">
+                    <form id="multi" method="POST" enctype="multipart/form-data">
                         <fieldset class="bg-primary-subtle">
                             <legend>Upload CSV file (artist,song,album)</legend>
                             <div>
