@@ -17,14 +17,14 @@ if (count($_FILES)) {
 $artist = (string) @$_REQUEST['artist'];
 $song = (string) @$_REQUEST['song'];
 $album = (string) @$_REQUEST['album'];
-$fetch = (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch'];
+$fetch = max(1, min(4, (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch']));
 
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=0.7">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Music search engine.">
     <title>IFPI 99fm</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -41,28 +41,32 @@ $fetch = (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch'];
                 submitButton.disabled = fileInput.files.length === 0;
             });
 
-            const form = document.getElementById('multi-form');
+            const form = document.getElementById('single-form');
             const spinner = document.getElementById('spinner');
             form.addEventListener('submit', (e) => {
                 form.classList.toggle('fade-out');
                 spinner.classList.toggle('show');
             });
 
-            // scroll to #results if table exists
             const results = document.getElementById('results');
-            if (results) {
+            if (results) { // scroll to #results if table exists
                 location.hash = "#results";
             }
         });
     </script>
     <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
         table#results {
             border-collapse: collapse;
             border: 1px solid black;
             width: 100%;
             margin-top: 5em;
-            margin-left: 0%;
-            margin-right: 0%;
+            margin-left: 0;
+            margin-right: 0;
         }
 
         table#results thead th {
@@ -75,12 +79,16 @@ $fetch = (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch'];
 
         #forms {
             width: 100%;
-            margin: 2em;
+            margin-top: 2em;
         }
 
         #forms table {
             margin-left: auto;
             margin-right: auto;
+        }
+
+        #fileToUpload {
+            margin-bottom: 2em;
         }
 
         #upload-btn {
@@ -92,6 +100,7 @@ $fetch = (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch'];
             border: 1px solid black;
             padding: 1.5em;
             border-radius: 2em;
+            /* box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px; */
         }
 
         legend {
@@ -131,7 +140,7 @@ $fetch = (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch'];
         <table>
             <tr>
                 <td>
-                    <form id="multi" method="POST" enctype="multipart/form-data">
+                    <form id="multi-form" method="POST" enctype="multipart/form-data">
                         <fieldset>
                             <legend>Upload CSV file (artist,song,album)</legend>
                             <div>
@@ -139,12 +148,12 @@ $fetch = (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch'];
                                 <input type="hidden" name="MAX_FILE_SIZE" value="524288" />
                                 <input type="file" name="fileToUpload" class="form-control" id="fileToUpload"
                                     accept=".csv" />
-                                <label for="fetchUpload" class="form-label">#<=:</label>
+                                <label for="fetchUpload" class="form-label"><b>#</b>&lt;=:</label>
                                 <select id="fetchUpload" name="fetch">
                                     <?php
-                                    foreach ([1, 2, 3, 4] as $p) {
+                                    foreach (range(1, 4) as $p) {
                                         $s = ($p == $fetch) ? 'selected' : '';
-                                        printf("<option value=%d %s>%d</option>\n", $p, $s, $p * 25);
+                                        printf("<option value=%d %s>%d</option>", $p, $s, $p * 25);
                                     }
                                     ?>
                                 </select>
@@ -153,11 +162,9 @@ $fetch = (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch'];
                         </fieldset>
                     </form>
                 </td>
+                <td>&nbsp;<b>or</b>&nbsp;</td>
                 <td>
-                    <p style="font-weight: bolder;width: 2em;text-align: center;">or</p>
-                </td>
-                <td>
-                    <form id="multi-form">
+                    <form id="single-form">
                         <fieldset>
                             <legend>Search by artist/song/album</legend>
                             <table>
@@ -166,8 +173,8 @@ $fetch = (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch'];
                                         <label for="artist" class="form-label">Artist:</label>
                                     </td>
                                     <td>
-                                        <input name="artist" id="artist" class="form-control" style="width: 100%;"
-                                            value="<?= @htmlentities($artist) ?>" /><br />
+                                        <input name="artist" id="artist" class="form-control"
+                                            value="<?= @htmlentities($artist) ?>" />
                                     </td>
                                 </tr>
                                 <tr>
@@ -175,8 +182,8 @@ $fetch = (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch'];
                                         <label for="song" class="form-label">Song:</label>
                                     </td>
                                     <td>
-                                        <input size=50 id="song" name="song" class="form-control" style="width: 100%;"
-                                            value="<?= @htmlentities($song) ?>" /><br />
+                                        <input id="song" name="song" class="form-control"
+                                            value="<?= @htmlentities($song) ?>" />
                                     </td>
                                 </tr>
                                 <tr>
@@ -184,20 +191,20 @@ $fetch = (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch'];
                                         <label for="album" class="form-label">Album:</label>
                                     </td>
                                     <td>
-                                        <input name="album" id="album" class="form-control" style="width: 100%ף"
-                                            value="<?= @htmlentities($album) ?>" /><br />
+                                        <input name="album" id="album" class="form-control"
+                                            value="<?= @htmlentities($album) ?>" />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <label for="fetch" class="form-label">#<=:</label>
+                                        <label for="fetch" class="form-label"><b>#</b>&lt;=:</label>
                                     </td>
                                     <td>
                                         <select id="fetch" name="fetch">
                                             <?php
-                                            foreach ([1, 2, 3, 4] as $p) {
+                                            foreach (range(1, 4) as $p) {
                                                 $s = ($p == $fetch) ? 'selected' : '';
-                                                printf("<option value=%d %s>%d</option>\n", $p, $s, $p * 25);
+                                                printf("<option value=%d %s>%d</option>", $p, $s, $p * 25);
                                             }
                                             ?>
                                         </select>
