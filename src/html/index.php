@@ -41,7 +41,7 @@ $fetch = (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch'];
                 submitButton.disabled = fileInput.files.length === 0;
             });
 
-            const form = document.getElementById('searchform');
+            const form = document.getElementById('multi-form');
             const spinner = document.getElementById('spinner');
             form.addEventListener('submit', (e) => {
                 form.classList.toggle('fade-out');
@@ -75,13 +75,10 @@ $fetch = (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch'];
 
         #forms {
             width: 100%;
-            margin-left: 2em;
-            margin-right: 2em;
-            ;
+            margin: 2em;
         }
 
         #forms table {
-            width: 80%;
             margin-left: auto;
             margin-right: auto;
         }
@@ -92,9 +89,6 @@ $fetch = (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch'];
 
         form {
             width: 100%;
-        }
-
-        fieldset {
             border: 1px solid black;
             padding: 1.5em;
             border-radius: 2em;
@@ -106,14 +100,6 @@ $fetch = (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch'];
 
         #multi select {
             margin-top: 1em;
-        }
-
-        .g {
-            background-color: #9de59d;
-        }
-
-        .r {
-            background-color: #d77d7d;
         }
 
         .source {
@@ -142,7 +128,7 @@ $fetch = (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch'];
             <tr>
                 <td>
                     <form id="multi" method="POST" enctype="multipart/form-data">
-                        <fieldset class="bg-primary-subtle">
+                        <fieldset>
                             <legend>Upload CSV file (artist,song,album)</legend>
                             <div>
                                 <label for="fileToUpload" class="form-label">CSV file:</label>
@@ -167,8 +153,8 @@ $fetch = (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch'];
                     <p style="font-weight: bolder;width:1%;text-align: center;">or</p>
                 </td>
                 <td>
-                    <form id="searchform">
-                        <fieldset class="bg-primary-subtle">
+                    <form id="multi-form">
+                        <fieldset>
                             <legend>Search by artist/song/album</legend>
                             <table>
                                 <tr>
