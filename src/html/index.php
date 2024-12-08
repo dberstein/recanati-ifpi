@@ -135,7 +135,7 @@ $fetch = (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch'];
                                 <input type="hidden" name="MAX_FILE_SIZE" value="524288" />
                                 <input type="file" name="fileToUpload" class="form-control" id="fileToUpload"
                                     accept=".csv" />
-                                <label for="fetchUpload" class="form-label">#:</label>
+                                <label for="fetchUpload" class="form-label">#<=:</label>
                                 <select id="fetchUpload" name="fetch">
                                     <?php
                                     foreach ([1, 2, 3, 4] as $p) {
@@ -186,7 +186,7 @@ $fetch = (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch'];
                                 </tr>
                                 <tr>
                                     <td>
-                                        <label for="fetch" class="form-label">#:</label>
+                                        <label for="fetch" class="form-label">#<=:</label>
                                     </td>
                                     <td>
                                         <select id="fetch" name="fetch">
