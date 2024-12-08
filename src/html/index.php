@@ -150,7 +150,7 @@ $fetch = (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch'];
                     </form>
                 </td>
                 <td>
-                    <p style="font-weight: bolder;width:1%;text-align: center;">or</p>
+                    <p style="font-weight: bolder;width: 2em;text-align: center;">or</p>
                 </td>
                 <td>
                     <form id="multi-form">
