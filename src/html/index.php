@@ -119,6 +119,10 @@ $fetch = (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch'];
         .show {
             display: block;
         }
+
+        .btn {
+            margin: 1em;
+        }
     </style>
 </head>
 
@@ -145,7 +149,7 @@ $fetch = (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch'];
                                     ?>
                                 </select>
                             </div>
-                            <input type="submit" id="upload-btn" class="btn btn-danger" />
+                            <input type="submit" id="upload-btn" class="btn btn-primary" />
                         </fieldset>
                     </form>
                 </td>
@@ -200,7 +204,7 @@ $fetch = (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch'];
                                     </td>
                                 </tr>
                             </table>
-                            <input type="submit" class="btn btn-danger" />
+                            <input type="submit" class="btn btn-primary" />
                         </fieldset>
                     </form>
                 </td>
