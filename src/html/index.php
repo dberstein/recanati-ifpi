@@ -230,9 +230,9 @@ $fetch = (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch'];
             <thead>
                 <tr>
                     <th>#</th>
-                    <th style="width 33%">Artist</th>
-                    <th style="width 33%">Song</th>
-                    <th style="width 33%">Album</th>
+                    <th style="width: 33%;">Artist</th>
+                    <th style="width: 33%;">Song</th>
+                    <th style="width: 33%;">Album</th>
                 </tr>
             </thead>
             <tbody>
