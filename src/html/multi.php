@@ -14,6 +14,7 @@
             overflow: scroll;
             background: transparent;
             border-radius: 10px;
+            margin-bottom: 3em;
         }
 
         .container {
@@ -26,11 +27,6 @@
 
         ul {
             margin: 0;
-        }
-
-        .reload {
-            font-size: 2em;
-            cursor: pointer;
         }
     </style>
     <script>
@@ -62,16 +58,22 @@
                     ]),
                 );
 
+                $title = implode(" - ", [
+                    empty($data[0]) ? '*' : $data[0],
+                    empty($data[1]) ? '*' : $data[1],
+                    empty($data[2]) ? '*' : $data[2],
+                ]);
+
                 printf(
-                    "<li>&nbsp;<span class='reload' onclick='reload(\"f$i\")'>⟳</span><b><a class='btn btn-secondary' href='%s' target=_blank style='text-decoration: underline;'>%s - %s (%s)</a>⧉</b></li>\n",
+                    "<li>&nbsp;<strong><a onclick='reload(\"f%d\")' class='btn btn-secondary'>⟳</a><span>%s</span><a href='%s' target=_blank class='btn btn-secondary'>⧉<a></strong></li>",
+                    $i,
+                    htmlentities($title),
                     $url,
-                    htmlentities($data[0] ?? ''),
-                    htmlentities($data[1] ?? ''),
-                    htmlentities($data[2] ?? ''),
                 );
 
                 printf(
-                    "<div class='container'><iframe id='f$i' src='%s'></iframe></div><br />\n",
+                    "<div class='container'><iframe id='f%d' src='%s'></iframe></div>",
+                    $i,
                     $url
                 );
             }
