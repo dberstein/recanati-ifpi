@@ -27,7 +27,17 @@
         ul {
             margin: 0;
         }
+
+        .reload {
+            font-size: 2em;
+            cursor: pointer;
+        }
     </style>
+    <script>
+        function reload(id) {
+            document.getElementById(id).contentWindow.location.reload();
+        }
+    </script>
 </head>
 
 <body>
@@ -39,7 +49,9 @@
 
         $file = $_FILES['fileToUpload']['tmp_name'];
         if (!empty($file) && false !== ($fh = fopen($file, 'r'))) {
+            $i = 0;
             while (($data = fgetcsv($fh, 1000, ",")) !== false) {
+                $i++;
                 $url = sprintf(
                     '/?%s#results',
                     http_build_query([
@@ -51,7 +63,7 @@
                 );
 
                 printf(
-                    "<li>&nbsp;<b><a class='btn btn-secondary' href='%s' target=_blank style='text-decoration: underline;'>%s - %s (%s)</a></b></li>\n",
+                    "<li>&nbsp;<span class='reload' onclick='reload(\"f$i\")'>⟳</span><b><a class='btn btn-secondary' href='%s' target=_blank style='text-decoration: underline;'>%s - %s (%s)</a>⧉</b></li>\n",
                     $url,
                     htmlentities($data[0] ?? ''),
                     htmlentities($data[1] ?? ''),
@@ -59,7 +71,7 @@
                 );
 
                 printf(
-                    "<div class='container'><iframe src='%s'></iframe></div><br />\n",
+                    "<div class='container'><iframe id='f$i' src='%s'></iframe></div><br />\n",
                     $url
                 );
             }
