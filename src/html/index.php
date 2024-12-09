@@ -170,47 +170,43 @@ $fetch = max(1, min(4, (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch']));
                             <table>
                                 <tr>
                                     <td>
-                                        <label for="artist" class="form-label">Artist:</label>
-                                    </td>
-                                    <td>
-                                        <input name="artist" id="artist" class="form-control"
-                                            value="<?= @htmlentities($artist) ?>" />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <label for="song" class="form-label">Song:</label>
-                                    </td>
-                                    <td>
-                                        <input id="song" name="song" class="form-control"
-                                            value="<?= @htmlentities($song) ?>" />
+                                        <div class="form-floating mb-3">
+                                            <input name="artist" id="artist" class="form-control"
+                                                value="<?= @htmlentities($artist) ?>" />
+                                            <label for="artist" class="form-label">Artist</label>
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <label for="album" class="form-label">Album:</label>
-                                    </td>
-                                    <td>
-                                        <input name="album" id="album" class="form-control"
-                                            value="<?= @htmlentities($album) ?>" />
+                                        <div class="form-floating mb-3">
+                                            <input id="song" name="song" class="form-control"
+                                                value="<?= @htmlentities($song) ?>" />
+                                            <label for="song" class="form-label">Song</label>
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <label for="fetch" class="form-label"><b>#</b>&lt;=:</label>
-                                    </td>
-                                    <td>
-                                        <select id="fetch" name="fetch">
-                                            <?php
-                                            foreach (range(1, 4) as $p) {
-                                                $s = ($p == $fetch) ? 'selected' : '';
-                                                printf("<option value=%d %s>%d</option>", $p, $s, $p * 25);
-                                            }
-                                            ?>
-                                        </select>
+                                        <div class="form-floating mb-3">
+                                            <input name="album" id="album" class="form-control"
+                                                value="<?= @htmlentities($album) ?>" />
+                                            <label for="album" class="form-label">Album</label>
+                                        </div>
                                     </td>
                                 </tr>
                             </table>
+                            <div class="mb-3">
+                                <label for="fetch" class="form-label"><b>#</b>&lt;=:</label>
+                                <select id="fetch" name="fetch">
+                                    <?php
+                                    foreach (range(1, 4) as $p) {
+                                        $s = ($p == $fetch) ? 'selected' : '';
+                                        printf("<option value=%d %s>%d</option>", $p, $s, $p * 25);
+                                    }
+                                    ?>
+                                </select>
+                            </div>
                             <input type="submit" class="btn btn-primary" />
                         </fieldset>
                     </form>
@@ -280,12 +276,10 @@ $fetch = max(1, min(4, (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch']));
                         );
                     }
 
-                    if ($n > 0) {
-                        printf(
-                            "<tr><td colspan=4 class='source'><a href='%s' target=_blank>↑ source ↑</a></td></tr>\n",
-                            $ifpi->url($page),
-                        );
-                    }
+                    printf(
+                        "<tr><td colspan=4 class='source'><a href='%s' target=_blank>↑ source ↑</a></td></tr>\n",
+                        $ifpi->url($page),
+                    );
                 }
 
                 if (!empty($artist . $song . $album) && $i == 0) {
