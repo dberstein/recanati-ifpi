@@ -25,6 +25,10 @@
             margin: 0;
         }
 
+        .reload-open {
+            font-family: Lucida Sans Unicode
+        }
+
         ul {
             margin: 0;
         }
@@ -64,11 +68,11 @@
                     empty($data[2]) ? '*' : $data[2],
                 ]);
 
+                $reload = sprintf("<a onclick='reload(\"f%d\")' class='btn btn-secondary reload-open'>&#8634; (reload frame)</a>", $i);
+                $open = sprintf("<a href='%s' target=_blank class='btn btn-secondary reload-open'>⧉ (open new tab)<a>", $url);
                 printf(
-                    "<li>&nbsp;<strong><a onclick='reload(\"f%d\")' class='btn btn-secondary'>⟳</a><span>%s</span><a href='%s' target=_blank class='btn btn-secondary'>⧉<a></strong></li>",
-                    $i,
-                    htmlentities($title),
-                    $url,
+                    "<li>&nbsp;$reload&nbsp;$open&nbsp;<span class='font-monospace'>%s</span></li>",
+                    htmlentities($title)
                 );
 
                 printf(
