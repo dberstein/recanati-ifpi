@@ -71,7 +71,9 @@
                 $reload = sprintf("<a onclick='reload(\"f%d\")' class='btn btn-secondary reload-open'>&#8634; (reload frame)</a>", $i);
                 $open = sprintf("<a href='%s' target=_blank class='btn btn-secondary reload-open'>⧉ (open new tab)<a>", $url);
                 printf(
-                    "<li>&nbsp;$reload&nbsp;$open&nbsp;<span class='font-monospace'>%s</span></li>",
+                    "<li>&nbsp;%s&nbsp;%s&nbsp;<span class='font-monospace'>%s</span></li>",
+                    $reload,
+                    $open,
                     htmlentities($title)
                 );
 
