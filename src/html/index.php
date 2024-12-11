@@ -284,7 +284,9 @@ $fetch = max(1, min(4, (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch']));
                     );
                 }
 
+                $reload = false;
                 if (!empty($artist . $song . $album) && $i == 0) {
+                    $reload = true;
                     printf(
                         "<tr><td colspan=4 class='source'>%s</td></tr>\n",
                         "No results found",
@@ -293,6 +295,17 @@ $fetch = max(1, min(4, (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch']));
                 ?>
             </tbody>
         </table>
+        <?php
+    }
+
+    if ($reload) {
+        ?>
+        <script>
+            var hash = window.location.hash;
+            if (hash === '#results') {
+                window.location.href = window.location.href.replace('#results', '');
+            }
+        </script>
         <?php
     }
     ?>
