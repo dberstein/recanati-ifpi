@@ -216,6 +216,7 @@ $fetch = max(1, min(4, (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch']));
     </div>
     <img src="/spinner.gif" id="spinner" class="hide center" />
     <?php
+    $reload = false;
     if (!empty($artist . $song . $album)) {
         ?>
         <a name="results" />
@@ -284,7 +285,6 @@ $fetch = max(1, min(4, (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch']));
                     );
                 }
 
-                $reload = false;
                 if (!empty($artist . $song . $album) && $i == 0) {
                     $reload = true;
                     printf(
@@ -303,6 +303,8 @@ $fetch = max(1, min(4, (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch']));
         <script>
             var hash = window.location.hash;
             if (hash === '#results') {
+                const spinner = document.getElementById('spinner');
+                spinner.classList.toggle('show');
                 setTimeout(function () {
                     window.location.href = window.location.href.replace('#results', '');
                 }, 1000 + Math.floor(Math.random() * 3000));
