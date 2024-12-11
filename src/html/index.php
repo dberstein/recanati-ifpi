@@ -303,7 +303,9 @@ $fetch = max(1, min(4, (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch']));
         <script>
             var hash = window.location.hash;
             if (hash === '#results') {
-                window.location.href = window.location.href.replace('#results', '');
+                setTimeout(function(){
+                    window.location.href = window.location.href.replace('#results', '');
+                }, 1500);
             }
         </script>
         <?php
