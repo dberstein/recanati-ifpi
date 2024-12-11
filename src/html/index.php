@@ -152,8 +152,8 @@ $fetch = max(1, min(4, (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch']));
                                 <select id="fetchUpload" name="fetch">
                                     <?php
                                     foreach (range(1, 4) as $p) {
-                                        $s = ($p == $fetch) ? 'selected' : '';
-                                        printf("<option value=%d %s>%d</option>", $p, $s, $p * 25);
+                                        $s = ($p == $fetch) ? ' selected' : '';
+                                        printf("<option value=%d%s>%d</option>", $p, $s, $p * 25);
                                     }
                                     ?>
                                 </select>
@@ -201,8 +201,8 @@ $fetch = max(1, min(4, (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch']));
                                 <select id="fetch" name="fetch">
                                     <?php
                                     foreach (range(1, 4) as $p) {
-                                        $s = ($p == $fetch) ? 'selected' : '';
-                                        printf("<option value=%d %s>%d</option>", $p, $s, $p * 25);
+                                        $s = ($p == $fetch) ? ' selected' : '';
+                                        printf("<option value=%d%s>%d</option>", $p, $s, $p * 25);
                                     }
                                     ?>
                                 </select>
