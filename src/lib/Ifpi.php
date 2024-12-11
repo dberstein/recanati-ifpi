@@ -37,4 +37,16 @@ class Ifpi
             sprintf('//div[@id="d%d"]/div[1]/div[7]/img', $idx)
         ));
     }
+
+    public function extractLines(\DOMElement $elem): array {
+        return array_filter(array_map(function ($s) {
+            return trim($s);
+        }, explode("\n", $elem->textContent)));
+    }
+
+    public function getXpath(string $content) {
+        $dom = new \DOMDocument('1.0');
+        @$dom->loadHTML($content);
+        return new \DOMXPath($dom);
+    }
 }

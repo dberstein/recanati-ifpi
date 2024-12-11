@@ -250,12 +250,9 @@ $fetch = max(1, min(4, (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch']));
                         continue;
                     }
 
-                    $dom = new DOMDocument('1.0');
-                    @$dom->loadHTML($html);
-                    $xpath = new DOMXPath($dom);
-                    $page = $downloader->getFilePage($file);
-
                     $n = 0;
+                    $page = $downloader->getFilePage($file);
+                    $xpath = $ifpi->getXpath($html);
                     foreach ($xpath->query("//*[@id]") as $elem) {
                         if (!preg_match('/^c[0-9]+/', $elem->id)) {
                             continue;
@@ -264,10 +261,7 @@ $fetch = max(1, min(4, (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch']));
                         $i++;
                         $n++;
 
-                        $lines = array_filter(array_map(function ($s) {
-                            return trim($s);
-                        }, explode("\n", $elem->textContent)));
-
+                        $lines = $ifpi->extractLines($elem);
                         echo new Item(
                             $ifpi->allowed($xpath, $i),
                             trim($lines[1]),
