@@ -303,9 +303,9 @@ $fetch = max(1, min(4, (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch']));
         <script>
             var hash = window.location.hash;
             if (hash === '#results') {
-                setTimeout(function(){
+                setTimeout(function () {
                     window.location.href = window.location.href.replace('#results', '');
-                }, 1500);
+                }, 1000 + Math.floor(Math.random() * 3000));
             }
         </script>
         <?php
