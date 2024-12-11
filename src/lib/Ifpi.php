@@ -29,14 +29,6 @@ class Ifpi
         );
     }
 
-    public function fetch($page = null)
-    {
-        $html = file_get_contents($this->url($page));
-        $dom = new DOMDocument('1.0');
-        @$dom->loadHTML($html);
-        return $dom;
-    }
-
     public function allowed($xpath, $idx)
     {
         return count($xpath->query(

@@ -18,11 +18,6 @@ class Downloader
         $this->rand = mt_rand(1000, 9999);
     }
 
-    public function add(string $url): void
-    {
-        $this->urls[] = $url;
-    }
-
     public function filename(string $url): string
     {
         $page=null;
@@ -41,7 +36,31 @@ class Downloader
         return (int) $matches[1];
     }
 
-    public function prepare(): void
+    public function do(): void
+    {
+        $this->prepare();
+
+        // Download the files...
+        do {
+            curl_multi_exec($this->multi_handle, $running);
+        } while ($running > 0);
+
+        $this->cleanup();
+    }
+
+    public function contents(): array
+    {
+        $contents = [];
+        foreach ($this->urls as $key => $url) {
+            $file = $this->filename($url);
+            $contents[$file] = file_exists($file) ? file_get_contents($file) : '<html></html>';
+            @unlink($file);
+        }
+
+        return $contents;
+    }
+
+    protected function prepare(): void
     {
         $this->multi_handle = curl_multi_init();
         $this->handles = [];
@@ -59,19 +78,7 @@ class Downloader
         }
     }
 
-    public function do(): void
-    {
-        $this->prepare();
-
-        // Download the files...
-        do {
-            curl_multi_exec($this->multi_handle, $running);
-        } while ($running > 0);
-
-        $this->cleanup();
-    }
-
-    public function cleanup(): void
+    protected function cleanup(): void
     {
         foreach ($this->urls as $key => $url) {
             curl_multi_remove_handle($this->multi_handle, $this->handles[$key]);
@@ -79,17 +86,5 @@ class Downloader
             fclose($this->filePointers[$key]);
         }
         curl_multi_close($this->multi_handle);
-    }
-
-    public function contents(): array
-    {
-        $contents = [];
-        foreach ($this->urls as $key => $url) {
-            $file = $this->filename($url);
-            $contents[$file] = file_exists($file) ? file_get_contents($file) : '<html></html>';
-            @unlink($file);
-        }
-
-        return $contents;
     }
 }
