@@ -253,6 +253,8 @@ $fetch = max(1, min(4, (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch']));
                     $n = 0;
                     $page = $downloader->getFilePage($file);
                     $xpath = $ifpi->getXpath($html);
+                    $greens = [];
+                    $reds = [];
                     foreach ($xpath->query("//*[@id]") as $elem) {
                         if (!preg_match('/^c[0-9]+/', $elem->id)) {
                             continue;
@@ -262,12 +264,26 @@ $fetch = max(1, min(4, (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch']));
                         $n++;
 
                         $lines = $ifpi->extractLines($elem);
-                        echo new Item(
-                            $ifpi->allowed($xpath, $i),
+                        $allowed = $ifpi->allowed($xpath, $i);
+                        $item = new Item(
+                            $allowed,
                             trim($lines[1]),
                             trim($lines[2]),
                             trim($lines[4]),
                         );
+                        if ($allowed) {
+                            $greens[] = $item;
+                        } else {
+                            $reds[] = $item;
+                        }
+                    }
+
+                    foreach ($greens as $itm) {
+                        echo $itm;
+                    }
+
+                    foreach ($reds as $itm) {
+                        echo $itm;
                     }
 
                     printf(
