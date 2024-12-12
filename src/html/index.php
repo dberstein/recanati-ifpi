@@ -245,13 +245,11 @@ $fetch = max(1, min(4, (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch']));
                 }
 
                 $i = 0;
-                $page = 0;
                 foreach ($downloader->contents() as $file => $html) {
                     if (!trim($html)) {
                         continue;
                     }
 
-                    $n = 0;
                     $page = $downloader->getFilePage($file);
                     $xpath = $ifpi->getXpath($html);
                     $items = [true => [], false => []];
@@ -261,8 +259,6 @@ $fetch = max(1, min(4, (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch']));
                         }
 
                         $i++;
-                        $n++;
-
                         $lines = $ifpi->extractLines($elem);
                         $allowed = $ifpi->allowed($xpath, $i);
                         $items[$allowed][] = new Item(
@@ -305,6 +301,7 @@ $fetch = max(1, min(4, (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch']));
             if (hash === '#results') {
                 const spinner = document.getElementById('spinner');
                 spinner.classList.toggle('show');
+                spinner.scrollIntoView();
                 setTimeout(function () {
                     window.location.href = window.location.href.replace('#results', '');
                 }, 1000 + Math.floor(Math.random() * 3000));
