@@ -303,7 +303,7 @@ $fetch = max(1, min(4, (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch']));
                 spinner.classList.toggle('show');
                 spinner.scrollIntoView();
                 setTimeout(function () {
-                    window.location.href = window.location.href.replace('#results', '');
+                    window.location.reload(true);
                 }, 1000 + Math.floor(Math.random() * 3000));
             }
         </script>
