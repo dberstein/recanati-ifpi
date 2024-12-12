@@ -294,7 +294,7 @@ $fetch = max(1, min(4, (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch']));
         <?php
     }
 
-    if ($reload && mt_rand(1, 100) > 90) { // reload 90% of times
+    if ($reload && mt_rand(1, 100) < 90) { // reload 90% of times
         ?>
         <script>
             var hash = window.location.hash;
