@@ -69,7 +69,8 @@
                     empty($data[2]) ? '*' : $data[2],
                 ]);
 
-                $reload = sprintf("<a onclick='reload(\"f%d\")' class='btn btn-secondary reload-open'>&#8634; (reload frame)</a>", $i);
+                $frame = sprintf('f%d', $i);
+                $reload = sprintf("<a onclick='reload(\"%s\")' class='btn btn-secondary reload-open'>&#8634; (reload frame)</a>", $frame);
                 $open = sprintf("<a href='%s' target=_blank class='btn btn-secondary reload-open'>⧉ (open new tab)<a>", $url);
                 printf(
                     "<li>&nbsp;%s&nbsp;%s&nbsp;<span class='font-monospace'>%s</span></li>",
@@ -79,11 +80,12 @@
                 );
 
                 printf(
-                    "<div class='container'><iframe id='f%d' src='%s'></iframe></div>",
-                    $i,
+                    "<div class='container'><iframe id='%s' src='%s'></iframe></div>",
+                    $frame,
                     $url
                 );
             }
+            fclose($fh);
         }
 
         ?>
