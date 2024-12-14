@@ -40,6 +40,11 @@
             padding: 0.5em;
             background-color: yellow;
         }
+
+        .back {
+            text-decoration: none;
+            margin: 1em;
+        }
     </style>
     <script>
         function reload(id) {
@@ -50,7 +55,7 @@
 
 <body>
     <h1>
-        <a href="/" class="btn btn-warning" style="text-decoration: none; margin: 1em;">← back ←</a>
+        <a href="/" class="btn btn-warning back">← back ←</a>
     </h1>
     <ol>
         <?php
