@@ -18,6 +18,10 @@
             margin-bottom: 3em;
         }
 
+        ul {
+            margin: 0;
+        }
+
         .container {
             background-image: url('/spinner.gif');
             background-position: center;
@@ -30,8 +34,11 @@
             font-family: Lucida Sans Unicode
         }
 
-        ul {
-            margin: 0;
+        .title {
+            border: 1px solid black;
+            border-radius: 5px;
+            padding: 0.5em;
+            background-color: yellow;
         }
     </style>
     <script>
@@ -71,9 +78,9 @@
 
                 $frame = sprintf('f%d', $i);
                 $reload = sprintf("<a onclick='reload(\"%s\")' class='btn btn-secondary reload-open'>&#8634; (reload frame)</a>", $frame);
-                $open = sprintf("<a href='%s' target=_blank class='btn btn-secondary reload-open'>⧉ (open new tab)<a>", $url);
+                $open = sprintf("<a href='%s' target=_blank class='btn btn-secondary reload-open'>⧉ (open new tab)</a>", $url);
                 printf(
-                    "<li>&nbsp;%s&nbsp;%s&nbsp;<span class='font-monospace'>%s</span></li>",
+                    "<li>&nbsp;%s&nbsp;%s&nbsp;<span class='font-monospace title'>%s</span></li>",
                     $reload,
                     $open,
                     htmlentities($title)
