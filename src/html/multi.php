@@ -54,7 +54,6 @@
     </h1>
     <ol>
         <?php
-
         $file = $_FILES['fileToUpload']['tmp_name'];
         if (!empty($file) && false !== ($fh = fopen($file, 'r'))) {
             $i = 0;
@@ -75,26 +74,23 @@
                     empty($data[1]) ? '*' : $data[1],
                     empty($data[2]) ? '*' : $data[2],
                 ]);
-
                 $frame = sprintf('f%d', $i);
-                $reload = sprintf("<a onclick='reload(\"%s\")' class='btn btn-secondary reload-open'>&#8634; (reload frame)</a>", $frame);
-                $open = sprintf("<a href='%s' target=_blank class='btn btn-secondary reload-open'>⧉ (open new tab)</a>", $url);
-                printf(
-                    "<li>&nbsp;%s&nbsp;%s&nbsp;<span class='font-monospace title'>%s</span></li>",
-                    $reload,
-                    $open,
-                    htmlentities($title)
-                );
-
-                printf(
-                    "<div class='container'><iframe id='%s' src='%s'></iframe></div>",
-                    $frame,
-                    $url
-                );
+                ?>
+                <li>
+                    &nbsp;
+                    <a onclick='reload("<?= $frame ?>")' class="btn btn-secondary reload-open">&#8634; (reload frame)</a>
+                    &nbsp;
+                    <a href="<?= $url ?>" target="_blank" class="btn btn-secondary reload-open">⧉ (open new tab)</a>
+                    &nbsp;
+                    <span class="font-monospace title"><?= htmlentities($title) ?></span>
+                    <div class='container'>
+                        <iframe id="<?= $frame ?>" src="<?= $url ?>"></iframe>
+                    </div>
+                </li>
+                <?php
             }
             fclose($fh);
         }
-
         ?>
     </ol>
 </body>
