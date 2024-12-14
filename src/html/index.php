@@ -233,7 +233,6 @@ $fetch = max(1, min(4, (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch']));
                 <?php
 
                 $ifpi = new Ifpi($artist, $song, $album);
-
                 $urls = [];
                 for ($i = 0; $i < $fetch; $i++) {
                     $urls[] = $ifpi->url($i + 1);
@@ -241,25 +240,17 @@ $fetch = max(1, min(4, (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch']));
 
                 $downloader = new Downloader(...$urls);
                 if (!empty($artist . $song . $album)) {
-                    $downloader->do();
+                    $downloader->download();
                 }
 
                 $i = 0;
-                foreach ($downloader->contents() as $file => $html) {
-                    if (!trim($html)) {
-                        continue;
-                    }
-
-                    $page = $downloader->getFilePage($file);
-                    $xpath = $ifpi->getXpath($html);
+                foreach ($downloader->contents() as $page => $xpath) {
                     $items = [true => [], false => []];
-                    foreach ($xpath->query("//*[@id]") as $elem) {
-                        if (!preg_match('/^c[0-9]+/', $elem->id)) {
-                            continue;
-                        }
-
+                    foreach ($ifpi->divWalker($xpath) as $elem) {
                         $i++;
-                        $lines = $ifpi->extractLines($elem);
+                        $lines = array_filter(array_map(function ($s) {
+                            return trim($s);
+                        }, explode("\n", $elem->textContent)));
                         $allowed = $ifpi->allowed($xpath, $i);
                         $items[$allowed][] = new Item(
                             $allowed,
@@ -269,24 +260,28 @@ $fetch = max(1, min(4, (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch']));
                         );
                     }
 
-                    foreach ([true, false] as $value) {
+                    foreach ([true, false] as $value) { // echo first allowed...
                         foreach ($items[$value] as $item) {
                             echo $item;
                         }
                     }
 
-                    printf(
-                        "<tr><td colspan=4 class='source'><a href='%s' target=_blank>↑ source ↑</a></td></tr>\n",
-                        $ifpi->url($page),
-                    );
+                    ?>
+                    <tr>
+                        <td colspan=4 class="source">
+                            <a href="<?= $ifpi->url($page) ?>" target="_blank>">↑ source ↑</a>
+                        </td>
+                    </tr>
+                    <?php
                 }
 
                 if (!empty($artist . $song . $album) && $i == 0) {
-                    $reload = true;
-                    printf(
-                        "<tr><td colspan=4 class='source'>%s</td></tr>\n",
-                        "No results found",
-                    );
+                    $reload = true; // reload on no results
+                    ?>
+                    <tr>
+                        <td colspan=4 class="source">No results found</td>
+                    </tr>
+                    <?php
                 }
                 ?>
             </tbody>

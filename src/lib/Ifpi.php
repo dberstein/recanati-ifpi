@@ -2,7 +2,8 @@
 
 namespace Daniel\Ifpi;
 
-use DOMDocument;
+use DOMXPath;
+use Generator;
 
 class Ifpi
 {
@@ -29,7 +30,7 @@ class Ifpi
         );
     }
 
-    public function allowed($xpath, $idx)
+    public function allowed(DOMXPath $xpath, $idx)
     {
         return count($xpath->query(
             sprintf('//div[@id="d%d"]/div[1]/div[4]/img', $idx)
@@ -38,15 +39,11 @@ class Ifpi
         ));
     }
 
-    public function extractLines(\DOMElement $elem): array {
-        return array_filter(array_map(function ($s) {
-            return trim($s);
-        }, explode("\n", $elem->textContent)));
-    }
-
-    public function getXpath(string $content) {
-        $dom = new \DOMDocument('1.0');
-        @$dom->loadHTML($content);
-        return new \DOMXPath($dom);
+    public function divWalker(DOMXPath $xpath): Generator {
+        foreach ($xpath->query("//*[@id]") as $elem) {
+            if (preg_match('/^c[0-9]+/', $elem->id)) {
+                yield $elem;
+            }
+        }
     }
 }

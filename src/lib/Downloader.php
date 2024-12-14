@@ -2,6 +2,9 @@
 
 namespace Daniel\Ifpi;
 
+use DOMDocument;
+use DOMXPath;
+
 class Downloader
 {
     protected array $urls;
@@ -18,9 +21,9 @@ class Downloader
         $this->rand = mt_rand(1000, 9999);
     }
 
-    public function filename(string $url): string
+    protected function filename(string $url): string
     {
-        $page=null;
+        $page = null;
         if (preg_match('/&page=(\d+)/', $url, $matches)) {
             $page = $matches[1];
         }
@@ -28,7 +31,7 @@ class Downloader
         return sprintf("/tmp/%s-%d-ifpi.%d.html", md5($url), $this->rand, $page);
     }
 
-    public function getFilePage(string $file): int
+    protected function getFilePage(string $file): int
     {
         // Downloader saves URL contents in filename of this regex format.
         // See Downloader::filename() for implementation.
@@ -36,7 +39,7 @@ class Downloader
         return (int) $matches[1];
     }
 
-    public function do(): void
+    public function download(): void
     {
         $this->prepare();
 
@@ -51,10 +54,22 @@ class Downloader
     public function contents(): array
     {
         $contents = [];
-        foreach ($this->urls as $key => $url) {
+        foreach ($this->urls as $url) {
             $file = $this->filename($url);
-            $contents[$file] = file_exists($file) ? file_get_contents($file) : '<html></html>';
-            @unlink($file);
+            $page = $this->getFilePage($file);
+
+            if (file_exists($file)) {
+                $html = trim(file_get_contents($file));
+                @unlink($file);
+            } else {
+                $html = '<html></html>';
+            }
+
+            if ($html) {
+                $dom = new DOMDocument('1.0');
+                @$dom->loadHTML($html);
+                $contents[$page] = new DOMXPath($dom);
+            }
         }
 
         return $contents;
