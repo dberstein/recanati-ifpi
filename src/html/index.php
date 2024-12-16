@@ -14,9 +14,9 @@ if (count($_FILES)) {
     die();
 }
 
-$artist = (string) @$_REQUEST['artist'];
-$song = (string) @$_REQUEST['song'];
-$album = (string) @$_REQUEST['album'];
+$artist = trim((string) @$_REQUEST['artist']);
+$song = trim((string) @$_REQUEST['song']);
+$album = trim((string) @$_REQUEST['album']);
 $fetch = max(1, min(4, (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch']));
 
 ?>
