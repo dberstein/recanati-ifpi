@@ -6,17 +6,8 @@ namespace Daniel\Ifpi;
 
 class Item
 {
-    protected $allowed;
-    protected $artist;
-    protected $song;
-    protected $album;
-
-    public function __construct($allowed, $artist, $song, $album)
+    public function __construct(public $allowed, public $artist, public $song, public $album)
     {
-        $this->allowed = $allowed;
-        $this->artist = $artist;
-        $this->song = $song;
-        $this->album = $album;
     }
 
     public function __tostring()
