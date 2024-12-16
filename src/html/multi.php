@@ -59,6 +59,8 @@
     </h1>
     <ol>
         <?php
+        declare(strict_types=1);
+
         $file = $_FILES['fileToUpload']['tmp_name'];
         if (!empty($file) && false !== ($fh = fopen($file, 'r'))) {
             $i = 0;
