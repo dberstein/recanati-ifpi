@@ -1,14 +1,17 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types = 1);
 
 namespace Daniel\Ifpi;
 
 class Item
 {
-    public function __construct(public $allowed, public $artist, public $song, public $album)
-    {
-    }
+    public function __construct(
+        public bool $allowed,
+        public string $artist,
+        public string $song,
+        public string $album,
+    ) {}
 
     public function __tostring()
     {
