@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types = 1);
 
 namespace Daniel\Ifpi;
 
@@ -9,11 +9,21 @@ use Generator;
 
 class Ifpi
 {
-    const URL = "https://ifpi.co.il/Search.asp";
+    const SERVICE_URL = "https://ifpi.co.il/Search.asp";
     protected array $params = [];
 
-    public function __construct($artist, $song, $album)
-    {
+    /**
+     * Constructor
+     *
+     * @param string $artist
+     * @param string $song
+     * @param string $album
+     */
+    public function __construct(
+        string $artist,
+        string $song,
+        string $album
+    ) {
         $this->params = [
             'freeSearch' => '',
             'artist' => $artist,
@@ -22,17 +32,29 @@ class Ifpi
         ];
     }
 
-    public function url($page = null)
+    /**
+     * Returns URL for results page $page.
+     *
+     * @param mixed $page
+     * @return string
+     */
+    public function url(int $page)
     {
-        //next: /html/body/div[2]/div/div/div[4]/div[58]/div[2]/img
         return sprintf(
             '%s?%s',
-            self::URL,
+            self::SERVICE_URL,
             http_build_query(array_merge($this->params, ['page' => $page]))
         );
     }
 
-    public function allowed(DOMXPath $xpath, $idx)
+    /**
+     * Returns wether item is allowed to play by IFPI.
+     *
+     * @param \DOMXPath $xpath
+     * @param int $idx
+     * @return bool
+     */
+    public function allowed(DOMXPath $xpath, int $idx)
     {
         return count($xpath->query(
             sprintf('//div[@id="d%d"]/div[1]/div[4]/img', $idx)
@@ -41,7 +63,14 @@ class Ifpi
         ));
     }
 
-    public function divWalker(DOMXPath $xpath): Generator {
+    /**
+     * Generator that yields on items whose id is "c" followed by a number.
+     *
+     * @param \DOMXPath $xpath
+     * @return \Generator
+     */
+    public function divWalker(DOMXPath $xpath): Generator
+    {
         foreach ($xpath->query("//*[@id]") as $elem) {
             if (preg_match('/^c[0-9]+/', $elem->id)) {
                 yield $elem;

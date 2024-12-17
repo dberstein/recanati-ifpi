@@ -6,13 +6,26 @@ namespace Daniel\Ifpi;
 
 class Item
 {
+    /**
+     * Constructor
+     *
+     * @param bool $allowed
+     * @param string $artist
+     * @param string $song
+     * @param string $album
+     */
     public function __construct(
-        public bool $allowed,
-        public string $artist,
-        public string $song,
-        public string $album,
+        protected bool $allowed,
+        protected string $artist,
+        protected string $song,
+        protected string $album,
     ) {}
 
+    /**
+     * Returns single string representation of this object.
+     *
+     * @return string
+     */
     public function __tostring()
     {
         static $idx = 0;
