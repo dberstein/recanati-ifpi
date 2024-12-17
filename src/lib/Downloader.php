@@ -6,6 +6,7 @@ namespace Daniel\Ifpi;
 
 use DOMDocument;
 use DOMXPath;
+use CurlMultiHandle;
 
 class Downloader
 {
@@ -17,7 +18,7 @@ class Downloader
 
     /**
      * Our cURL multihandle
-     * @var resource
+     * @var CurlMultiHandle
      */
     protected $multi_handle;
 

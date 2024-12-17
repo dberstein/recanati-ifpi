@@ -9,7 +9,7 @@ RUN apt update -y && apt upgrade -y \
 # Configure PHP \
  && cd /usr/local/etc/php && ln -nsf php.ini-production php.ini \
  && sed -i'' 's/expose_php = On/expose_php = Off/g' php.ini \
- && sed -i'' 's/max_execution_time = 30/max_execution_time = 30/g' php.ini \
+ && sed -i'' 's/max_execution_time = 30/max_execution_time = 45/g' php.ini \
 # Install Composer \
  && curl -sS https://getcomposer.org/installer | \
     php -- --install-dir=/usr/local/bin --filename=composer
