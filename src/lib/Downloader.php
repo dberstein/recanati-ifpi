@@ -141,13 +141,16 @@ class Downloader
         $this->handles = [];
         $this->filePointers = [];
 
+        $timeout = 45;
+        $connectTimeout = 5;
         foreach ($this->urls as $key => $url) {
             $this->filePointers[$key] = fopen($this->filename($url), "w+");
             $this->handles[$key] = curl_init($url);
             curl_setopt($this->handles[$key], CURLOPT_FILE, $this->filePointers[$key]);
             curl_setopt($this->handles[$key], CURLOPT_HEADER, 0);
-            curl_setopt($this->handles[$key], CURLOPT_CONNECTTIMEOUT, value: 5);
-            curl_setopt($this->handles[$key], CURLOPT_TIMEOUT, 45);
+            curl_setopt($this->handles[$key], CURLOPT_ENCODING, 'gzip,deflate');
+            curl_setopt($this->handles[$key], CURLOPT_TIMEOUT, $timeout);
+            curl_setopt($this->handles[$key], CURLOPT_CONNECTTIMEOUT, value: $connectTimeout);
             curl_setopt($this->handles[$key], CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
             curl_multi_add_handle($this->multi_handle, $this->handles[$key]);
         }
