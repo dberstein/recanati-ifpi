@@ -217,7 +217,7 @@ $fetch = max(1, min(4, (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch']));
     <img src="/spinner.gif" id="spinner" class="hide center" />
     <?php
     $reload = false;
-    if (!empty($artist . $song . $album)) {
+    if (!empty("{$artist}{$song}{$album}")) {
         ?>
         <a name="results" />
         <table id="results" class="table">
@@ -235,7 +235,7 @@ $fetch = max(1, min(4, (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch']));
                 $ifpi = new Ifpi($artist, $song, $album);
                 $urls = [];
                 for ($i = 0; $i < $fetch; $i++) {
-                    $urls[] = $ifpi->url($i + 1);
+                    $urls[] = $ifpi->url(page: $i + 1);
                 }
 
                 $downloader = new Downloader(...$urls);
@@ -253,10 +253,10 @@ $fetch = max(1, min(4, (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch']));
                         }, explode("\n", $elem->textContent)));
                         $allowed = $ifpi->allowed($xpath, $i);
                         $items[$allowed][] = new Item(
-                            $allowed,
-                            trim($lines[1]),
-                            trim($lines[2]),
-                            trim($lines[4]),
+                            allowed: $allowed,
+                            artist: trim($lines[1]),
+                            song: trim($lines[2]),
+                            album: trim($lines[4]),
                         );
                     }
 
@@ -275,7 +275,7 @@ $fetch = max(1, min(4, (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch']));
                     <?php
                 }
 
-                if (!empty($artist . $song . $album) && $i == 0) {
+                if (!empty("{$artist}{$song}{$album}") && $i == 0) {
                     $reload = true; // reload on no results
                     ?>
                     <tr>

@@ -102,7 +102,7 @@ class Downloader
 
     /**
      * Return associative array of results. Keys are the page number and values the downloaded data.
-     * Temporary file is deleted after being read.
+     * Temporary files are deleted after being read.
      *
      * @return array
      */

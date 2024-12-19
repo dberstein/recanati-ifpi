@@ -65,21 +65,27 @@
             $i = 0;
             while (($data = fgetcsv($fh, 1000, ",")) !== false) {
                 $i++;
+
+                $_artist = trim($data[0] ?? '');
+                $_song = trim($data[1] ?? '');
+                $_album = trim($data[2] ?? '');
+
                 $url = sprintf(
                     '/?%s#results',
                     http_build_query([
-                        'artist' => $data[0] ?? '',
-                        'song' => $data[1] ?? '',
-                        'album' => $data[2] ?? '',
+                        'artist' => $_artist,
+                        'song' => $_song,
+                        'album' => $_album,
                         'fetch' => (!$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch'],
                     ]),
                 );
 
                 $title = implode(" - ", [
-                    empty($data[0]) ? '*' : $data[0],
-                    empty($data[1]) ? '*' : $data[1],
-                    empty($data[2]) ? '*' : $data[2],
+                    $_artist ?: '*',
+                    $_song ?: '*',
+                    $_album ?: '*',
                 ]);
+
                 $frame = sprintf('f%d', $i);
                 ?>
                 <li>

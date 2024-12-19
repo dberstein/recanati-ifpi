@@ -48,7 +48,7 @@ class Ifpi
     }
 
     /**
-     * Returns wether item is allowed to play by IFPI.
+     * Returns whether item is allowed to play by IFPI.
      *
      * @param \DOMXPath $xpath
      * @param int $idx
@@ -58,9 +58,9 @@ class Ifpi
     {
         return count($xpath->query(
             sprintf('//div[@id="d%d"]/div[1]/div[4]/img', $idx)
-        )) && count($xpath->query(
+        )) > 0 && count($xpath->query(
             sprintf('//div[@id="d%d"]/div[1]/div[7]/img', $idx)
-        ));
+        )) > 0;
     }
 
     /**
