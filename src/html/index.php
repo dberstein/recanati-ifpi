@@ -239,9 +239,7 @@ $fetch = max(1, min(4, (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch']));
                 }
 
                 $downloader = new Downloader(...$urls);
-                if (!empty($artist . $song . $album)) {
-                    $downloader->download();
-                }
+                $downloader->download();
 
                 $i = 0;
                 foreach ($downloader->contents() as $page => $xpath) {
@@ -275,7 +273,7 @@ $fetch = max(1, min(4, (!@$_REQUEST['fetch']) ? 1 : (int) $_REQUEST['fetch']));
                     <?php
                 }
 
-                if (!empty("{$artist}{$song}{$album}") && $i == 0) {
+                if ($i == 0) {
                     $reload = true; // reload on no results
                     ?>
                     <tr>

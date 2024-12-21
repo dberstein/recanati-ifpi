@@ -60,7 +60,7 @@
     <ol>
         <?php
 
-        $file = $_FILES['fileToUpload']['tmp_name'];
+        $file = @$_FILES['fileToUpload']['tmp_name'];
         if (!empty($file) && false !== ($fh = fopen($file, 'r'))) {
             $i = 0;
             while (($data = fgetcsv($fh, 1000, ",")) !== false) {
